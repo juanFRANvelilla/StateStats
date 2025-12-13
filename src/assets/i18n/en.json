@@ -1,0 +1,58 @@
+{
+    "usa_map": {
+        "search_placeholder": "Search state",
+        "draw_polygon": "Draw polygon",
+        "edit_vertices": "Edit vertices",
+        "move_polygon": "Move polygon",
+        "split_polygon": "Split polygon",
+        "cut_polygon": "Cut polygon",
+        "add_area": "Add area",
+        "extract_area": "Extract area",
+        "add_geojson": "Add GeoJSON",
+        "list_states": "List states",
+        "polygon_area": "Polygon area",
+        "manage_layers": "Manage layers",
+        "drag_drop_geojson": "Drag a GeoJSON file to the map"
+    },
+    "states_list": {
+        "table": {
+            "select": "Select",
+            "state": "State",
+            "detail": "Detail",
+            "layer": "Layer"
+        },
+        "compare_button": "Compare",
+        "polygon_area": "Polygon Area",
+        "no_polygon_selected": "Not polygon selected"
+    },
+    "state_detail": {
+        "cases": "Cases",
+        "hospitalization": "Hospitalization",
+        "test": "Tests",
+        "total_cases": "Total cases",
+        "new_cases": "New cases today",
+        "total_hospitalized": "Total hospitalized",
+        "current_hospitalized": "Currently hospitalized",
+        "total_test": "Total tests",
+        "ok": "OK"
+    },
+    "state_compared": {
+        "title": "Compare states",
+        "people": "people",
+        "cases": "Cases",
+        "hospitalization": "Hospitalization",
+        "test": "Tests",
+        "total_cases": "Total cases",
+        "new_cases": "New cases today",
+        "total_hospitalized": "Total hospitalized",
+        "current_hospitalized": "Currently hospitalized",
+        "total_test": "Total tests",
+        "ok": "OK"
+    },
+    "error_dialog": {
+        "title": "Error",
+        "content": "You must select at least 2 states."
+    },
+    "en": "🇺🇸",
+    "es": "🇪🇸"
+}

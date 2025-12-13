@@ -10,46 +10,47 @@
             <div class="expandable-header" (click)="casesOpen = !casesOpen">
                 <span>
                     <strong>
-                        Cases 
+                        {{ literals?.state_detail?.cases }}
                     </strong>
                 </span>
-            <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
+                <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
             </div>
             <div *ngIf="casesOpen" class="expandable-content">
-            <p><strong>Total cases: </strong>{{ state.totalCases }}</p>
-            <p><strong>New cases today: </strong>{{ state.newCases }}</p>
+                <p><strong>{{ literals?.state_detail?.total_cases }}: </strong>{{ state.totalCases }}</p>
+                <p><strong>{{ literals?.state_detail?.new_cases }}: </strong>{{ state.newCases }}</p>
             </div>
         </div>
-        
+
         <div class="expandable-container">
             <div class="expandable-header" (click)="hospitalizationOpen = !hospitalizationOpen">
-            <span>
-                <strong>
-                    Hospitalization 
-                </strong>
-            </span>
-            <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
+                <span>
+                    <strong>
+                        {{ literals?.state_detail?.hospitalization }}
+                    </strong>
+                </span>
+                <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
             </div>
             <div *ngIf="hospitalizationOpen" class="expandable-content">
-            <p><strong>Total hospitalizated: </strong>{{ state.totalHospitalized }}</p>
-            <p><strong>Current hospitalizated: </strong>{{ state.hospitalizedCurrently }}</p>
+                <p><strong>{{ literals?.state_detail?.total_hospitalized }}: </strong>{{ state.totalHospitalized }}</p>
+                <p><strong>{{ literals?.state_detail?.current_hospitalized }}: </strong>{{ state.hospitalizedCurrently
+                    }}</p>
             </div>
         </div>
-        
+
         <div class="expandable-container">
             <div class="expandable-header" (click)="testsOpen = !testsOpen">
-            <span><strong>Test</strong></span>
-            <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
+                <span><strong>{{ literals?.state_detail?.test }}</strong></span>
+                <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
             </div>
             <div *ngIf="testsOpen" class="expandable-content">
-            <p><strong>Total test: </strong>{{ state.totalTest }}</p>
+                <p><strong>{{ literals?.state_detail?.total_test }}: </strong>{{ state.totalTest }}</p>
             </div>
         </div>
 
 
         <div class="text-center mt-3">
             <button (click)="closeModal()" class="btn btn-primary btn-lg ms-auto d-block">
-                <i class="bi bi-check-circle me-2"></i>OK
+                <i class="bi bi-check-circle me-2"></i>{{ literals?.state_detail?.ok }}
             </button>
         </div>
     </div>

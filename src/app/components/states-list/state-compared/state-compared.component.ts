@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StateInterface } from '../../model/state-interface';
 import { CommonModule } from '@angular/common';
 
+import { LanguageService } from '../../../services/language.service';
+
 @Component({
   selector: 'app-state-compared',
   standalone: true,
@@ -19,9 +21,15 @@ export class StateComparedComponent implements OnInit {
 
   minCasePercentage = 100;
   minHospitalizatedPercentage = 100;
-  
+  literals: any = {};
+
+  constructor(public languageService: LanguageService) { }
 
   ngOnInit(): void {
+    this.languageService.literals$.subscribe((literals) => {
+      this.literals = literals;
+    });
+
     this.states = this.states?.map(state => {
       return {
         ...state,
@@ -31,13 +39,13 @@ export class StateComparedComponent implements OnInit {
     });
   }
 
-  private calculateMaxPercentage(percentaje: number, type: string){
-    if(type === 'case'){
-      if(percentaje < this.minCasePercentage){
+  private calculateMaxPercentage(percentaje: number, type: string) {
+    if (type === 'case') {
+      if (percentaje < this.minCasePercentage) {
         this.minCasePercentage = percentaje;
       }
     } else {
-      if(percentaje < this.minHospitalizatedPercentage){
+      if (percentaje < this.minHospitalizatedPercentage) {
         this.minHospitalizatedPercentage = percentaje;
       }
     }

@@ -1,8 +1,15 @@
 <div class="ms-2 d-flex nav-container">
   <div class="search-container">
     <i class="bi bi-search"></i>
-    <input type="text" class="form-control" placeholder="Buscar estado" [(ngModel)]="searchTerm"
-      (input)="filterStates()">
+    <input type="text" class="form-control" [placeholder]="literals?.usa_map?.search_placeholder"
+      [(ngModel)]="searchTerm" (input)="filterStates()">
+  </div>
+  <div class="ms-auto me-2">
+    <select #langSelect class="form-select lang-select" style="width: auto; cursor: pointer;" [(ngModel)]="currentLang"
+      (change)="changeLanguage(currentLang); langSelect.blur()">
+      <option value="es">ES</option>
+      <option value="en">US</option>
+    </select>
   </div>
 </div>
 
@@ -15,47 +22,52 @@
   </div>
 
   <div class="polygon-buttons position-absolute bottom-position ms-2">
-    <button title="Dibujar poligono" (click)="activateDrawPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygon !== null }">
+    <button [title]="literals?.usa_map?.draw_polygon" (click)="activateDrawPolygon()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': drawPolygon !== null }">
       <i class="bi bi-hexagon"></i>
     </button>
-    <button title="Editar vertices" (click)="activateModifyTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': modifyInteraction !== null }"
-    [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.edit_vertices" (click)="activateModifyTool()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': modifyInteraction !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-arrows-angle-contract"></i>
     </button>
-    <button title="Mover poligono" (click)="activateTranformTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': translateInteraction !== null }"
-      [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.move_polygon" (click)="activateTranformTool()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': translateInteraction !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-arrows-move"></i>
     </button>
-    <button title="Dividir poligono" (click)="activateDrawLine()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawLine !== null }"
-      [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.split_polygon" (click)="activateDrawLine()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': drawLine !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-slash-lg"></i>
     </button>
-    <button title="Recortar poligono" (click)="intersectPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonCut !== null }"
-      [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.cut_polygon" (click)="intersectPolygons()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': drawPolygonCut !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-scissors"></i>
     </button>
-    <button title="Agregar area" (click)="unionPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }"
-      [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.add_area" (click)="unionPolygons()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-intersect"></i>
     </button>
-    <button title="Extraer area" (click)="intersectContainPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }"
-      [disabled]="!hasDrwanPolygons()">
+    <button [title]="literals?.usa_map?.extract_area" (click)="intersectContainPolygon()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }" [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-box-arrow-in-down"></i>
     </button>
-    <button title="Agregar geojson" (click)="setDragAndDropInteraction()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
+    <button [title]="literals?.usa_map?.add_geojson" (click)="setDragAndDropInteraction()" class="btn feature-buttons"
+      [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
       <i class="bi bi-file-earmark-plus"></i>
     </button>
 
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <button title="Lista de estados" (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
-        <i class="bi bi-list-ol"></i>
+    <button [title]="literals?.usa_map?.list_states" (click)="changeViewMode(viewMode.LIST_STATES)"
+      class="btn feature-buttons">
+      <i class="bi bi-list-ol"></i>
     </button>
-    <button title="Area del poligono" (click)="changeViewMode(viewMode.POLYGON_AREA)" class="btn feature-buttons" [disabled]="!selectedPolygon">
-        <i class="bi bi-wrench"></i>
+    <button [title]="literals?.usa_map?.polygon_area" (click)="changeViewMode(viewMode.POLYGON_AREA)"
+      class="btn feature-buttons" [disabled]="!selectedPolygon">
+      <i class="bi bi-wrench"></i>
     </button>
-    <button title="Gestionar capas" (click)="changeViewMode(viewMode.LAYERS)" class="btn feature-buttons">
+    <button [title]="literals?.usa_map?.manage_layers" (click)="changeViewMode(viewMode.LAYERS)"
+      class="btn feature-buttons">
       <i class="bi bi-layers"></i>
     </button>
   </div>
@@ -83,6 +95,6 @@
 
 <div *ngIf="dragAndDropInteraction !== null" class="drag-drop-dialog">
   <div class="dialog-content">
-    <p>Arrastra un fichero GeoJSON al mapa</p>
+    <p>{{ literals?.usa_map?.drag_drop_geojson }}</p>
   </div>
 </div>

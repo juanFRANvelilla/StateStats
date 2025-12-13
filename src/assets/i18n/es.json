@@ -1,0 +1,58 @@
+{
+    "usa_map": {
+        "search_placeholder": "Buscar estado",
+        "draw_polygon": "Dibujar poligono",
+        "edit_vertices": "Editar vertices",
+        "move_polygon": "Mover poligono",
+        "split_polygon": "Dividir poligono",
+        "cut_polygon": "Recortar poligono",
+        "add_area": "Agregar area",
+        "extract_area": "Extraer area",
+        "add_geojson": "Agregar geojson",
+        "list_states": "Lista de estados",
+        "polygon_area": "Area del poligono",
+        "manage_layers": "Gestionar capas",
+        "drag_drop_geojson": "Arrastra un fichero GeoJSON al mapa"
+    },
+    "states_list": {
+        "table": {
+            "select": "Seleccionar",
+            "state": "Estado",
+            "detail": "Detalle",
+            "layer": "Capa"
+        },
+        "compare_button": "Comparar",
+        "polygon_area": "Area del Polígono",
+        "no_polygon_selected": "Ningún polígono seleccionado"
+    },
+    "state_detail": {
+        "cases": "Casos",
+        "hospitalization": "Hospitalización",
+        "test": "Pruebas",
+        "total_cases": "Total de casos",
+        "new_cases": "Nuevos casos hoy",
+        "total_hospitalized": "Total hospitalizados",
+        "current_hospitalized": "Hospitalizados actuales",
+        "total_test": "Total de pruebas",
+        "ok": "Aceptar"
+    },
+    "state_compared": {
+        "title": "Comparar estados",
+        "people": "personas",
+        "cases": "Casos",
+        "hospitalization": "Hospitalización",
+        "test": "Pruebas",
+        "total_cases": "Total de casos",
+        "new_cases": "Nuevos casos hoy",
+        "total_hospitalized": "Total hospitalizados",
+        "current_hospitalized": "Hospitalizados actuales",
+        "total_test": "Total de pruebas",
+        "ok": "Aceptar"
+    },
+    "error_dialog": {
+        "title": "Error",
+        "content": "Tienes que seleccionar al menos 2 estados."
+    },
+    "en": "🇺🇸",
+    "es": "🇪🇸"
+}

@@ -18,6 +18,7 @@ import { StateComparedComponent } from '../states-list/state-compared/state-comp
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../states-list/error-dialog/error-dialog.component';
 import { Modify, Translate } from 'ol/interaction';
+import { LanguageService } from '../../services/language.service';
 import { Select } from 'ol/interaction';
 import { click } from 'ol/events/condition';
 import * as turf from '@turf/turf';
@@ -30,11 +31,11 @@ import pointInPolygon from "@turf/boolean-point-in-polygon";
 import {
   DragAndDrop,
 } from 'ol/interaction.js';
-import { GeoJSON, TopoJSON} from 'ol/format.js';
+import { GeoJSON, TopoJSON } from 'ol/format.js';
 import {
   Tile as TileLayer,
 } from 'ol/layer.js';
-import {Vector as VectorSource} from 'ol/source.js';
+import { Vector as VectorSource } from 'ol/source.js';
 import { ViewMode } from '../model/view-mode';
 import { LayerSelected } from '../model/layer-selected';
 
@@ -60,6 +61,8 @@ export class UsaMapComponent {
   private stateList: StateInterface[] = [];
   filteredStateList: StateInterface[] = [];
   searchTerm: string = '';
+  literals: any = {};
+  currentLang: string = 'es';
 
   disabledActions = false;
   statesFeatures: Feature[] = [];
@@ -81,17 +84,27 @@ export class UsaMapComponent {
   private initialCenter: [number, number] | null = null;
   private initialZoom: number | null = null;
 
-  dragAndDropInteraction: DragAndDrop| null = null;;
+  dragAndDropInteraction: DragAndDrop | null = null;;
   link!: HTMLAnchorElement;
 
   viewMode = ViewMode;
 
   constructor(
     private usaStatesService: UsaStatesService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    public languageService: LanguageService
+  ) { }
+
+  changeLanguage(lang: string) {
+    this.languageService.changeLanguage(lang);
+  }
 
   ngOnInit(): void {
+    this.currentLang = this.languageService.currentLang;
+    this.languageService.literals$.subscribe((literals) => {
+      this.literals = literals;
+    });
+
     this.initializeMap();
     this.tooltipElement = document.getElementById('tooltip')!;
 
@@ -99,11 +112,11 @@ export class UsaMapComponent {
       this.loadGeoJsonData(geojsonData);
 
       this.usaStatesService
-      .getStateList()
-      .subscribe((stateList: StateInterface[]) => {
-        this.stateList = stateList;
-        this.vectorSource.changed();
-      });
+        .getStateList()
+        .subscribe((stateList: StateInterface[]) => {
+          this.stateList = stateList;
+          this.vectorSource.changed();
+        });
 
       geojsonData.features.forEach((feature: any) => {
         const stateCode = feature.properties.ste_stusps_code;
@@ -324,7 +337,7 @@ export class UsaMapComponent {
       });
 
       this.map.addInteraction(this.dragAndDropInteraction);
-  
+
       this.dragAndDropInteraction.on('addfeatures', (event) => {
         const vectorSource = new VectorSource({
           features: event.features,
@@ -332,7 +345,7 @@ export class UsaMapComponent {
         const vectorLayer = new VectorLayer({
           source: vectorSource,
         });
-        
+
         // Logica para poder asignar un nombre unico a la capa
         let newLayerName = 'ExternalLayer';
         let increaseNumber = 1;
@@ -367,7 +380,7 @@ export class UsaMapComponent {
       this.drawLine.on("drawend", event => {
         const feature = event.feature;
         const coordinates = (feature.getGeometry() as LineString).getCoordinates()!;
-  
+
         this.getSplits(coordinates);
         this.deactivateAllInteractionTool();
         setTimeout(() => {
@@ -594,7 +607,7 @@ export class UsaMapComponent {
       this.drawPolygonUnion.on('drawend', (event) => {
         const feature = event.feature;
 
-        
+
         const polygonGeometryAdd: Polygon = feature.getGeometry() as Polygon;
         // obtener objeto de poligono en formato turf
         const polygonGeoJsonAdd = turf.polygon(
@@ -606,12 +619,12 @@ export class UsaMapComponent {
           const polygonGeometry = polygonFeature.getGeometry() as Polygon;
           // obtener el poligo iterado en formato turf
           const polygonGeoJson = turf.polygon(polygonGeometry.getCoordinates());
-          
-          if (turf.booleanIntersects(polygonGeoJson, polygonGeoJsonAdd)){
+
+          if (turf.booleanIntersects(polygonGeoJson, polygonGeoJsonAdd)) {
             const resultPolygon = turf.union(
               turf.featureCollection([polygonGeoJson, polygonGeoJsonAdd])
             );
-  
+
             this.polygonVectorSource.removeFeature(polygonFeature);
             const newCoordinates = resultPolygon!.geometry.coordinates;
             const newFeature = this.addFeatrueFromCoordinates(newCoordinates);
@@ -848,11 +861,11 @@ export class UsaMapComponent {
       this.map.removeInteraction(this.translateInteraction);
       this.translateInteraction = null;
     }
-    if(this.dragAndDropInteraction){
+    if (this.dragAndDropInteraction) {
       this.map.removeInteraction(this.dragAndDropInteraction);
       this.dragAndDropInteraction = null;
     }
-    
+
   }
 
   private getStyle(feature: any) {
@@ -933,9 +946,9 @@ export class UsaMapComponent {
 
   existLayerName(name: string): boolean {
     const layers = this.map.getLayers().getArray();
-    const layerFiltered =  layers.find(layer => layer.get('name') === name);
+    const layerFiltered = layers.find(layer => layer.get('name') === name);
     return layerFiltered ? true : false
   }
 
-  
+
 }

@@ -1,20 +1,22 @@
-<div class="modal fade show" tabindex="-1" role="dialog" style="display: block; opacity: 0.8; margin-top: 150px;" aria-labelledby="errorDialogLabel" aria-hidden="false">
+<div class="modal fade show" tabindex="-1" role="dialog" style="display: block; opacity: 0.8; margin-top: 150px;"
+  aria-labelledby="errorDialogLabel" aria-hidden="false">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content" data-bs-theme="dark">
-      
-      <button type="button" class="btn-close position-absolute top-0 end-0 m-3 " data-bs-theme="dark" (click)="closeDialog()"></button>
-      
+
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3 " data-bs-theme="dark"
+        (click)="closeDialog()"></button>
+
 
       <div class="modal-header">
         <span class="text-danger fs-1 me-2">
           <i class="bi bi-x-circle"></i>
         </span>
-        
-        <h5 class="modal-title" id="errorDialogLabel">Error</h5>
+
+        <h5 class="modal-title" id="errorDialogLabel">{{ literals?.error_dialog?.title }}</h5>
       </div>
-      
+
       <div class="modal-header">
-        <p>Tienes que seleccionar al menos 2 estados.</p>
+        <p>{{ literals?.error_dialog?.content }}</p>
       </div>
 
     </div>

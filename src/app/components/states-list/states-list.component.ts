@@ -16,6 +16,8 @@ import { LayerSelected } from '../model/layer-selected';
 
 
 
+import { LanguageService } from '../../services/language.service';
+
 @Component({
   selector: 'app-states-list',
   standalone: true,
@@ -32,10 +34,15 @@ export class StatesListComponent {
   ViewMode = ViewMode;
   selectedPolygon: Feature | null = null;
   mapLayers: LayerSelected[] = [];
+  literals: any = {};
 
-  constructor(private usaStatesService: UsaStatesService, public dialog: MatDialog) {}
+  constructor(private usaStatesService: UsaStatesService, public dialog: MatDialog, public languageService: LanguageService) { }
 
   ngOnInit(): void {
+    this.languageService.literals$.subscribe((literals) => {
+      this.literals = literals;
+    });
+
     this.usaStatesService.getStateList().subscribe((stateList: StateInterface[]) => {
       this.stateList = stateList;
     });
@@ -63,7 +70,7 @@ export class StatesListComponent {
     this.stateSelected = state;
   }
 
-  closeModal(){
+  closeModal() {
     this.stateSelected = undefined;
     this.comparedStates = false;
   }

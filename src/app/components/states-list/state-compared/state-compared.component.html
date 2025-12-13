@@ -1,7 +1,7 @@
 <div class="modal-overlay d-flex align-items-center justify-content-center">
     <div class="modal-content bg-white rounded" (click)="$event.stopPropagation()">
         <div class="header-container">
-            <p><strong>Comparar estados</strong></p>
+            <p><strong>{{ literals?.state_compared?.title }}</strong></p>
             <button class="btn-close m-2" (click)="closeModal()" aria-label="Close"></button>
         </div>
 
@@ -9,57 +9,60 @@
             <div *ngFor="let state of states" class="col-6 flex-item">
                 <h3 class="my-1 fs-3 text-start">{{ state.name }} %</h3>
 
-                <p class="text-secondary">{{ state.population }} people</p>
+                <p class="text-secondary">{{ state.population }} {{ literals?.state_compared?.people }}</p>
                 <div class="expandable-container">
                     <div class="expandable-header" (click)="casesOpen = !casesOpen">
                         <span>
                             <strong>
-                                Cases 
+                                {{ literals?.state_compared?.cases }}
                             </strong>
                             <strong [ngStyle]="{ color: state.casePercentage === minCasePercentage ? 'green' : 'red' }">
                                 ({{ state.casePercentage.toFixed(2) }}%)
                             </strong>
                         </span>
-                    <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
+                        <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
                     </div>
                     <div *ngIf="casesOpen" class="expandable-content">
-                    <p><strong>Total cases: </strong>{{ state.totalCases }}</p>
-                    <p><strong>New cases today: </strong>{{ state.newCases }}</p>
+                        <p><strong>{{ literals?.state_compared?.total_cases }}: </strong>{{ state.totalCases }}</p>
+                        <p><strong>{{ literals?.state_compared?.new_cases }}: </strong>{{ state.newCases }}</p>
                     </div>
                 </div>
-                
+
                 <div class="expandable-container">
                     <div class="expandable-header" (click)="hospitalizationOpen = !hospitalizationOpen">
-                    <span>
-                        <strong>
-                            Hospitalization 
-                        </strong>
-                        <strong [ngStyle]="{ color: state.hospitalizedPercentage === minHospitalizatedPercentage ? 'green' : 'red' }">
-                            ({{ state.hospitalizedPercentage.toFixed(2) }}%)
-                        </strong>
-                    </span>
-                    <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
+                        <span>
+                            <strong>
+                                {{ literals?.state_compared?.hospitalization }}
+                            </strong>
+                            <strong
+                                [ngStyle]="{ color: state.hospitalizedPercentage === minHospitalizatedPercentage ? 'green' : 'red' }">
+                                ({{ state.hospitalizedPercentage.toFixed(2) }}%)
+                            </strong>
+                        </span>
+                        <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
                     </div>
                     <div *ngIf="hospitalizationOpen" class="expandable-content">
-                    <p><strong>Total hospitalizated: </strong>{{ state.totalHospitalized }}</p>
-                    <p><strong>Current hospitalizated: </strong>{{ state.hospitalizedCurrently }}</p>
+                        <p><strong>{{ literals?.state_compared?.total_hospitalized }}: </strong>{{
+                            state.totalHospitalized }}</p>
+                        <p><strong>{{ literals?.state_compared?.current_hospitalized }}: </strong>{{
+                            state.hospitalizedCurrently }}</p>
                     </div>
                 </div>
-                
+
                 <div class="expandable-container">
                     <div class="expandable-header" (click)="testsOpen = !testsOpen">
-                    <span><strong>Test</strong></span>
-                    <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
+                        <span><strong>{{ literals?.state_compared?.test }}</strong></span>
+                        <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
                     </div>
                     <div *ngIf="testsOpen" class="expandable-content">
-                    <p><strong>Total test: </strong>{{ state.totalTest }}</p>
+                        <p><strong>{{ literals?.state_compared?.total_test }}: </strong>{{ state.totalTest }}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center mt-3">
             <button (click)="closeModal()" class="btn btn-primary btn-lg ms-auto d-block">
-                <i class="bi bi-check-circle me-2"></i>OK
+                <i class="bi bi-check-circle me-2"></i>{{ literals?.state_compared?.ok }}
             </button>
         </div>
     </div>
