@@ -103,14 +103,9 @@ export class UsaStatesService {
   }
 
   triggerCleanAll() {
-    // Deseleccionar estados
     const updatedStateList = this.stateList.value.map(state => ({ ...state, selected: false }));
     this.setStateList(updatedStateList);
-
-    // Limpiar poligono seleccionado
     this.setSelectedPolygon(null);
-
-    // Notificar limpieza (para mapa)
     this.cleanAllSubject.next();
   }
 }

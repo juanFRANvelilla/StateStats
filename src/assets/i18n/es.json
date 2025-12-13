@@ -12,7 +12,8 @@
         "list_states": "Lista de estados",
         "polygon_area": "Area del poligono",
         "manage_layers": "Gestionar capas",
-        "drag_drop_geojson": "Arrastra un fichero GeoJSON al mapa"
+        "drag_drop_geojson": "Arrastra un fichero GeoJSON al mapa",
+        "delete_polygon": "Eliminar polígono"
     },
     "states_list": {
         "table": {

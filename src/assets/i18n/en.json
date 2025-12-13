@@ -12,7 +12,8 @@
         "list_states": "List states",
         "polygon_area": "Polygon area",
         "manage_layers": "Manage layers",
-        "drag_drop_geojson": "Drag a GeoJSON file to the map"
+        "drag_drop_geojson": "Drag a GeoJSON file to the map",
+        "delete_polygon": "Delete polygon"
     },
     "states_list": {
         "table": {

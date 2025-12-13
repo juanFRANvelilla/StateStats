@@ -159,6 +159,11 @@ export class UsaMapComponent {
       if (this.polygonVectorSource) {
         this.polygonVectorSource.clear();
       }
+      this.selectedPolygon = null;
+      if (this.initialCenter && this.initialZoom !== null) {
+        this.map.getView().setCenter(fromLonLat(this.initialCenter));
+        this.map.getView().setZoom(this.initialZoom);
+      }
     });
   }
 
