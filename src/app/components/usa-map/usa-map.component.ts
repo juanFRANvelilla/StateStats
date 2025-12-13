@@ -154,6 +154,12 @@ export class UsaMapComponent {
         layerSelected.layer.setVisible(layerSelected.selected);
       });
     });
+
+    this.usaStatesService.getCleanAll().subscribe(() => {
+      if (this.polygonVectorSource) {
+        this.polygonVectorSource.clear();
+      }
+    });
   }
 
   private setSelectedFeature(feature: Feature) {

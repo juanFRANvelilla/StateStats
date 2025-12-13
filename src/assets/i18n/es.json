@@ -22,6 +22,7 @@
             "layer": "Capa"
         },
         "compare_button": "Comparar",
+        "clean_all": "Limpiar todo",
         "polygon_area": "Area del Polígono",
         "no_polygon_selected": "Ningún polígono seleccionado"
     },

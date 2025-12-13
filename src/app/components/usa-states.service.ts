@@ -16,6 +16,7 @@ export class UsaStatesService {
   private viewMode = new BehaviorSubject<ViewMode>(ViewMode.LIST_STATES);
   private selectedPolygon = new BehaviorSubject<Feature | null>(null);
   private mapLayers = new BehaviorSubject<LayerSelected[]>([]);
+  private cleanAllSubject = new BehaviorSubject<void | null>(null);
 
   constructor(private http: HttpClient) { }
 
@@ -64,7 +65,7 @@ export class UsaStatesService {
     this.stateList.next(newStateList);
   }
 
-  selectState(stateChanged: StateInterface, active: boolean): void{
+  selectState(stateChanged: StateInterface, active: boolean): void {
     stateChanged.selected = active;
     const updatedStateList = this.stateList.value.map(state => {
       if (state.code === stateChanged.code) {
@@ -83,7 +84,7 @@ export class UsaStatesService {
   getStates(): Observable<any> {
     return this.http.get<any>('assets/us-states.geojson');
   }
-  
+
   getPopulationByState(name: string): Observable<number | null> {
     return this.http.get<any[]>('assets/us-states-population.json').pipe(
       map((data) => {
@@ -91,9 +92,25 @@ export class UsaStatesService {
         return stateData ? +stateData.population.replace(/,/g, '') : null;
       })
     );
-  }  
+  }
 
   getCovidData(state: string): Observable<CovidData> {
     return this.http.get<any>(`https://api.covidtracking.com/v1/states/${state.toLocaleLowerCase()}/current.json`);
+  }
+
+  getCleanAll(): Observable<void | null> {
+    return this.cleanAllSubject.asObservable();
+  }
+
+  triggerCleanAll() {
+    // Deseleccionar estados
+    const updatedStateList = this.stateList.value.map(state => ({ ...state, selected: false }));
+    this.setStateList(updatedStateList);
+
+    // Limpiar poligono seleccionado
+    this.setSelectedPolygon(null);
+
+    // Notificar limpieza (para mapa)
+    this.cleanAllSubject.next();
   }
 }

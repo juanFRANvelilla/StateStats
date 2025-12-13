@@ -29,9 +29,12 @@
             </table>
         </div>
     </div>
-    <div class="text-start mt-1 p-1">
+    <div class="d-flex justify-content-between align-items-center mt-1 p-1">
         <button class="btn btn-primary btn-lg" (click)="openComparedComponent()">
             {{ literals?.states_list?.compare_button }}
+        </button>
+        <button class="btn btn-warning btn-lg" [ngStyle]="{'margin-right': '28px'}" [title]="literals?.states_list?.clean_all" (click)="cleanAll()">
+            <i class="bi bi-trash"></i>
         </button>
     </div>
 </div>

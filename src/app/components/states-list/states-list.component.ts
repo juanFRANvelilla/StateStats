@@ -95,4 +95,8 @@ export class StatesListComponent {
     this.usaStatesService.manageMapLayer(layerSelected.selected, layerSelected.layer);
   }
 
+  cleanAll() {
+    this.usaStatesService.triggerCleanAll();
+  }
+
 }

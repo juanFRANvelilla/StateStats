@@ -22,6 +22,7 @@
             "layer": "Layer"
         },
         "compare_button": "Compare",
+        "clean_all": "Clean all",
         "polygon_area": "Polygon Area",
         "no_polygon_selected": "Not polygon selected"
     },
