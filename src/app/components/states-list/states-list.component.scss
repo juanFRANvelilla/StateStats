@@ -4,13 +4,13 @@
   height: 100vh;
 }
 
-.scroll-container {
-  height: 100%;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-}
+// .scroll-container {
+//   height: 100%;
+//   overflow-y: auto;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+//   width: 100%;
+// }
 
 .state-list {
   width: 100%;
@@ -130,4 +130,45 @@
   color: red;
   font-weight: bold;
   border: 2px solid red;
+}
+
+.scroll-container {
+    height: 100%;
+    border-radius: 4px;
+    width: 100%;
+    overflow: hidden; 
+}
+
+.table-body-scroll {
+    max-height: calc(100% - 45px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.state-list {
+    border-collapse: collapse;
+}
+
+.state-select-col {
+    width: 80px;
+    min-width: 80px;
+}
+
+.state-detail-col {
+    width: 100px;
+}
+.view-detail-col {
+    width: 85px;
+}
+
+.state-name-col {
+    width: auto; 
+}
+
+.header-table {
+    margin-bottom: 0;
+}
+
+.header-table thead tr:last-child th {
+    border-bottom: none;
 }
