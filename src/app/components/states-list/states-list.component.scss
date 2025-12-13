@@ -1,6 +1,11 @@
+.principal-container{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .scroll-container {
-  max-height: 88vh;
-  height: 90vh;
+  height: 100%;
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 4px;

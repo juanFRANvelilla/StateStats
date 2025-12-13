@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar ms-2">
   <div class="search-container">
     <i class="bi bi-search"></i>
     <input type="text" class="form-control" placeholder="Buscar estado" [(ngModel)]="searchTerm"
@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <div class="polygon-buttons position-absolute bottom-position">
+  <div class="polygon-buttons position-absolute bottom-position ms-2">
     <button (click)="activateDrawPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygon !== null }">
       <i class="bi bi-hexagon"></i>
     </button>
@@ -48,7 +48,7 @@
 
   </div>
 
-  <div class="modeView-buttons position-absolute bottom-0 end-0">
+  <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
     <button (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
       <i class="bi bi-hand-index"></i>
     </button>
@@ -69,7 +69,7 @@
     </button>
   </div>
 
-  <div id="map" class="map" style="width: 100%; height: 88vh">
+  <div id="map" class="map" style="width: 100%; height: 100vh">
     <div id="tooltip" class="tooltip" style="display: none;"></div>
   </div>
 

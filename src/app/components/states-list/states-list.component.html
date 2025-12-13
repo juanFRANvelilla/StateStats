@@ -1,4 +1,4 @@
-<div *ngIf="viewMode == ViewMode.LIST_STATES">
+<div *ngIf="viewMode == ViewMode.LIST_STATES" class="principal-container">
     <div class="scroll-container">
         <table class="table table-hover table-bordered state-list w-100">
             <thead>
@@ -23,7 +23,7 @@
             </tbody>
           </table>
     </div>
-    <div class="text-start mt-1">
+    <div class="text-start mt-1 p-1">
         <button class="btn btn-primary btn-lg" (click)="openComparedComponent()">
             Compare
         </button>
