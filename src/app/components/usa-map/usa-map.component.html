@@ -1,10 +1,10 @@
-<nav class="navbar ms-2">
+<div class="ms-2 d-flex nav-container">
   <div class="search-container">
     <i class="bi bi-search"></i>
     <input type="text" class="form-control" placeholder="Buscar estado" [(ngModel)]="searchTerm"
       (input)="filterStates()">
   </div>
-</nav>
+</div>
 
 <div class="position-relative">
 
@@ -15,47 +15,47 @@
   </div>
 
   <div class="polygon-buttons position-absolute bottom-position ms-2">
-    <button (click)="activateDrawPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygon !== null }">
+    <button title="Dibujar poligono" (click)="activateDrawPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygon !== null }">
       <i class="bi bi-hexagon"></i>
     </button>
-    <button (click)="activateModifyTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': modifyInteraction !== null }"
+    <button title="Editar vertices" (click)="activateModifyTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': modifyInteraction !== null }"
     [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-arrows-angle-contract"></i>
     </button>
-    <button (click)="activateTranformTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': translateInteraction !== null }"
+    <button title="Mover poligono" (click)="activateTranformTool()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': translateInteraction !== null }"
       [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-arrows-move"></i>
     </button>
-    <button (click)="activateDrawLine()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawLine !== null }"
+    <button title="Dividir poligono" (click)="activateDrawLine()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawLine !== null }"
       [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-slash-lg"></i>
     </button>
-    <button (click)="intersectPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonCut !== null }"
+    <button title="Recortar poligono" (click)="intersectPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonCut !== null }"
       [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-scissors"></i>
     </button>
-    <button (click)="unionPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }"
+    <button title="Agregar area" (click)="unionPolygons()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }"
       [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-intersect"></i>
     </button>
-    <button (click)="intersectContainPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }"
+    <button title="Extraer area" (click)="intersectContainPolygon()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }"
       [disabled]="!hasDrwanPolygons()">
       <i class="bi bi-box-arrow-in-down"></i>
     </button>
-    <button (click)="setDragAndDropInteraction()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
+    <button title="Agregar geojson" (click)="setDragAndDropInteraction()" class="btn feature-buttons" [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
       <i class="bi bi-file-earmark-plus"></i>
     </button>
 
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <button (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
-      <i class="bi bi-hand-index"></i>
+    <button title="Lista de estados" (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
+        <i class="bi bi-list-ol"></i>
     </button>
-    <button (click)="changeViewMode(viewMode.POLYGON_AREA)" class="btn feature-buttons" [disabled]="!selectedPolygon">
+    <button title="Area del poligono" (click)="changeViewMode(viewMode.POLYGON_AREA)" class="btn feature-buttons" [disabled]="!selectedPolygon">
         <i class="bi bi-wrench"></i>
     </button>
-    <button (click)="changeViewMode(viewMode.LAYERS)" class="btn feature-buttons">
+    <button title="Gestionar capas" (click)="changeViewMode(viewMode.LAYERS)" class="btn feature-buttons">
       <i class="bi bi-layers"></i>
     </button>
   </div>

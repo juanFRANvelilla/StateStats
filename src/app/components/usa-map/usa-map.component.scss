@@ -15,6 +15,10 @@
   opacity: 0.8;
 }
 
+.nav-container{
+  height: 42px;
+}
+
 .search-container {
   width: 200px;
   display: flex;
@@ -35,7 +39,7 @@
   overflow-y: auto;
   z-index: 1000;
   width: 200px;
-  top: -5px;
+  left: 25px;
 }
 
 .filtered-list-container p {
