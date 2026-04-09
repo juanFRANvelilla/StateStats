@@ -28,27 +28,25 @@
         "no_polygon_selected": "Ningún polígono seleccionado"
     },
     "state_detail": {
-        "cases": "Casos",
-        "hospitalization": "Hospitalización",
-        "test": "Pruebas",
-        "total_cases": "Total de casos",
-        "new_cases": "Nuevos casos hoy",
-        "total_hospitalized": "Total hospitalizados",
-        "current_hospitalized": "Hospitalizados actuales",
-        "total_test": "Total de pruebas",
-        "ok": "Aceptar"
+        "ok": "Aceptar",
+        "population": "Población total",
+        "median_income": "Ingreso medio",
+        "poverty": "Personas en pobreza",
+        "unemployed": "Desempleados",
+        "home_value": "Valor medio de vivienda",
+        "rent": "Alquiler medio mensual",
+        "no_insurance": "Sin seguro médico"
     },
     "state_compared": {
         "title": "Comparar estados",
         "people": "personas",
-        "cases": "Casos",
-        "hospitalization": "Hospitalización",
-        "test": "Pruebas",
-        "total_cases": "Total de casos",
-        "new_cases": "Nuevos casos hoy",
-        "total_hospitalized": "Total hospitalizados",
-        "current_hospitalized": "Hospitalizados actuales",
-        "total_test": "Total de pruebas",
+        "population": "Población total",
+        "median_income": "Ingreso medio",
+        "poverty": "Personas en pobreza",
+        "unemployed": "Desempleados",
+        "home_value": "Valor medio de vivienda",
+        "rent": "Alquiler medio mensual",
+        "no_insurance": "Sin seguro médico",
         "ok": "Aceptar"
     },
     "error_dialog": {

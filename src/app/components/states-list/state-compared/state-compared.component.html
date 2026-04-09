@@ -9,53 +9,33 @@
             <div *ngFor="let state of states" class="col-6 flex-item">
                 <h3 class="my-1 fs-3 text-start">{{ state.name }} %</h3>
 
-                <p class="text-secondary">{{ state.population }} {{ literals?.state_compared?.people }}</p>
+                <p class="text-secondary">{{ state.totalPopulation }} {{ literals?.state_compared?.people }}</p>
                 <div class="expandable-container">
-                    <div class="expandable-header" (click)="casesOpen = !casesOpen">
-                        <span>
-                            <strong>
-                                {{ literals?.state_compared?.cases }}
-                            </strong>
-                            <strong [ngStyle]="{ color: state.casePercentage === minCasePercentage ? 'green' : 'red' }">
-                                ({{ state.casePercentage.toFixed(2) }}%)
-                            </strong>
-                        </span>
-                        <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
-                    </div>
-                    <div *ngIf="casesOpen" class="expandable-content">
-                        <p><strong>{{ literals?.state_compared?.total_cases }}: </strong>{{ state.totalCases }}</p>
-                        <p><strong>{{ literals?.state_compared?.new_cases }}: </strong>{{ state.newCases }}</p>
-                    </div>
-                </div>
-
-                <div class="expandable-container">
-                    <div class="expandable-header" (click)="hospitalizationOpen = !hospitalizationOpen">
-                        <span>
-                            <strong>
-                                {{ literals?.state_compared?.hospitalization }}
-                            </strong>
-                            <strong
-                                [ngStyle]="{ color: state.hospitalizedPercentage === minHospitalizatedPercentage ? 'green' : 'red' }">
-                                ({{ state.hospitalizedPercentage.toFixed(2) }}%)
-                            </strong>
-                        </span>
-                        <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
-                    </div>
-                    <div *ngIf="hospitalizationOpen" class="expandable-content">
-                        <p><strong>{{ literals?.state_compared?.total_hospitalized }}: </strong>{{
-                            state.totalHospitalized }}</p>
-                        <p><strong>{{ literals?.state_compared?.current_hospitalized }}: </strong>{{
-                            state.hospitalizedCurrently }}</p>
-                    </div>
-                </div>
-
-                <div class="expandable-container">
-                    <div class="expandable-header" (click)="testsOpen = !testsOpen">
-                        <span><strong>{{ literals?.state_compared?.test }}</strong></span>
-                        <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
-                    </div>
-                    <div *ngIf="testsOpen" class="expandable-content">
-                        <p><strong>{{ literals?.state_compared?.total_test }}: </strong>{{ state.totalTest }}</p>
+                    <div class="expandable-content d-flex flex-column gap-2" style="background: white;">
+                        <p>
+                            <strong>{{ literals?.state_compared?.median_income }}: </strong>
+                            <span [ngStyle]="{ color: state.incomeColor }">$ {{ state.medianIncome }}</span>
+                        </p>
+                        <p>
+                            <strong>{{ literals?.state_compared?.poverty }}: </strong>
+                            <span [ngStyle]="{ color: state.povertyColor }">
+                                {{ state.peopleInPoverty }} ({{ state.povertyPercentage.toFixed(2) }}%)
+                            </span>
+                        </p>
+                        <p>
+                            <strong>{{ literals?.state_compared?.unemployed }}: </strong>
+                            <span [ngStyle]="{ color: state.unemployedColor }">
+                                {{ state.unemployed }} ({{ state.unemployedPercentage.toFixed(2) }}%)
+                            </span>
+                        </p>
+                        <p><strong>{{ literals?.state_compared?.home_value }}: </strong>$ {{ state.medianHomeValue }}</p>
+                        <p><strong>{{ literals?.state_compared?.rent }}: </strong>$ {{ state.medianRent }}</p>
+                        <p>
+                            <strong>{{ literals?.state_compared?.no_insurance }}: </strong>
+                            <span [ngStyle]="{ color: state.noInsuranceColor }">
+                                {{ state.noHealthInsurance }} ({{ state.noInsurancePercentage.toFixed(2) }}%)
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>

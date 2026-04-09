@@ -9,7 +9,7 @@ import Fill from 'ol/style/Fill';
 import { Geometry, LineString, Polygon } from 'ol/geom';
 import Draw from 'ol/interaction/Draw';
 import { UsaStatesService } from '../usa-states.service';
-import { CovidData, StateInterface } from '../model/state-interface';
+import { StateInterface } from '../model/state-interface';
 import { FormsModule } from '@angular/forms';
 import { defaults as defaultControls } from 'ol/control';
 import { CommonModule } from '@angular/common';
@@ -118,34 +118,36 @@ export class UsaMapComponent {
           this.vectorSource.changed();
         });
 
-      geojsonData.features.forEach((feature: any) => {
-        const stateCode = feature.properties.ste_stusps_code;
-        const stateName = feature.properties.ste_name[0];
+      this.usaStatesService.getCensusData().subscribe((censusData: any[]) => {
+        const dataRows = censusData.slice(1);
 
-        this.usaStatesService
-          .getCovidData(stateCode)
-          .subscribe((covidData: CovidData) => {
-            // Llama a `getPopulationByState` para obtener la población
-            this.usaStatesService
-              .getPopulationByState(stateName)
-              .subscribe((population: number | null) => {
-                // Verifica si la población fue encontrada
-                const filteredFeature: StateInterface = {
-                  name: stateName,
-                  code: feature.properties.ste_code[0],
-                  stateCode: stateCode,
-                  selected: false,
-                  totalCases: covidData.positive,
-                  newCases: covidData.positiveIncrease,
-                  totalHospitalized: covidData.hospitalizedCumulative,
-                  hospitalizedCurrently: covidData.hospitalizedCurrently,
-                  totalTest: covidData.totalTestResults,
-                  population: population || 0,
-                };
-                this.stateList.push(filteredFeature);
-                this.usaStatesService.setStateList(this.stateList);
-              });
-          });
+        geojsonData.features.forEach((feature: any) => {
+          const stateCode = feature.properties.ste_stusps_code;
+          const stateFips = feature.properties.ste_code[0];
+          const stateName = feature.properties.ste_name[0];
+
+          const stateRow = dataRows.find(row => row[10] === stateFips || row[0] === stateName);
+
+          if (stateRow) {
+            const mappedState: StateInterface = {
+              name: stateName,
+              code: stateFips,
+              stateCode: stateCode,
+              selected: false,
+              totalPopulation: Number(stateRow[1] || 0),
+              medianIncome: Number(stateRow[2] || 0),
+              peopleInPoverty: Number(stateRow[3] || 0),
+              unemployed: Number(stateRow[4] || 0),
+              employed: Number(stateRow[5] || 0),
+              medianHomeValue: Number(stateRow[6] || 0),
+              medianRent: Number(stateRow[7] || 0),
+              universityDegree: Number(stateRow[8] || 0),
+              noHealthInsurance: Number(stateRow[9] || 0),
+            };
+            this.stateList.push(mappedState);
+          }
+        });
+        this.usaStatesService.setStateList(this.stateList);
       });
     });
 
@@ -902,7 +904,7 @@ export class UsaMapComponent {
       });
     }
 
-    if (!filterState || filterState.totalCases === undefined) {
+    if (!filterState || !filterState.totalPopulation) {
       return new Style({
         stroke: new Stroke({
           color: 'rgba(0, 0, 255, 0.3)',
@@ -914,14 +916,15 @@ export class UsaMapComponent {
       });
     }
 
+    const povertyRatio = filterState.peopleInPoverty / filterState.totalPopulation;
     let fillColor = 'rgb(0, 255, 0)';
 
-    if (filterState.totalCases >= 3000000) {
+    if (povertyRatio >= 0.17) {
       fillColor = 'rgb(255, 0, 0)';
-    } else if (filterState.totalCases >= 1000000) {
-      fillColor = 'rgb(255, 255, 0)';
-    } else if (filterState.totalCases >= 500000) {
+    } else if (povertyRatio >= 0.14) {
       fillColor = 'rgb(255, 165, 0)';
+    } else if (povertyRatio >= 0.11) {
+      fillColor = 'rgb(255, 255, 0)';
     }
 
     return new Style({

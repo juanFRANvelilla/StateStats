@@ -28,27 +28,25 @@
         "no_polygon_selected": "Not polygon selected"
     },
     "state_detail": {
-        "cases": "Cases",
-        "hospitalization": "Hospitalization",
-        "test": "Tests",
-        "total_cases": "Total cases",
-        "new_cases": "New cases today",
-        "total_hospitalized": "Total hospitalized",
-        "current_hospitalized": "Currently hospitalized",
-        "total_test": "Total tests",
-        "ok": "OK"
+        "ok": "OK",
+        "population": "Total population",
+        "median_income": "Median Income",
+        "poverty": "People in poverty",
+        "unemployed": "Unemployed people",
+        "home_value": "Median home value",
+        "rent": "Median monthly rent",
+        "no_insurance": "Without health insurance"
     },
     "state_compared": {
         "title": "Compare states",
         "people": "people",
-        "cases": "Cases",
-        "hospitalization": "Hospitalization",
-        "test": "Tests",
-        "total_cases": "Total cases",
-        "new_cases": "New cases today",
-        "total_hospitalized": "Total hospitalized",
-        "current_hospitalized": "Currently hospitalized",
-        "total_test": "Total tests",
+        "population": "Total population",
+        "median_income": "Median Income",
+        "poverty": "People in poverty",
+        "unemployed": "Unemployed people",
+        "home_value": "Median home value",
+        "rent": "Median monthly rent",
+        "no_insurance": "Without health insurance",
         "ok": "OK"
     },
     "error_dialog": {

@@ -7,43 +7,14 @@
         </div>
 
         <div class="expandable-container">
-            <div class="expandable-header" (click)="casesOpen = !casesOpen">
-                <span>
-                    <strong>
-                        {{ literals?.state_detail?.cases }}
-                    </strong>
-                </span>
-                <span class="expandable-icon">{{ casesOpen ? '-' : '+' }}</span>
-            </div>
-            <div *ngIf="casesOpen" class="expandable-content">
-                <p><strong>{{ literals?.state_detail?.total_cases }}: </strong>{{ state.totalCases }}</p>
-                <p><strong>{{ literals?.state_detail?.new_cases }}: </strong>{{ state.newCases }}</p>
-            </div>
-        </div>
-
-        <div class="expandable-container">
-            <div class="expandable-header" (click)="hospitalizationOpen = !hospitalizationOpen">
-                <span>
-                    <strong>
-                        {{ literals?.state_detail?.hospitalization }}
-                    </strong>
-                </span>
-                <span class="expandable-icon">{{ hospitalizationOpen ? '-' : '+' }}</span>
-            </div>
-            <div *ngIf="hospitalizationOpen" class="expandable-content">
-                <p><strong>{{ literals?.state_detail?.total_hospitalized }}: </strong>{{ state.totalHospitalized }}</p>
-                <p><strong>{{ literals?.state_detail?.current_hospitalized }}: </strong>{{ state.hospitalizedCurrently
-                    }}</p>
-            </div>
-        </div>
-
-        <div class="expandable-container">
-            <div class="expandable-header" (click)="testsOpen = !testsOpen">
-                <span><strong>{{ literals?.state_detail?.test }}</strong></span>
-                <span class="expandable-icon">{{ testsOpen ? '-' : '+' }}</span>
-            </div>
-            <div *ngIf="testsOpen" class="expandable-content">
-                <p><strong>{{ literals?.state_detail?.total_test }}: </strong>{{ state.totalTest }}</p>
+            <div class="expandable-content d-flex flex-column gap-2" style="background: white;">
+                <p><strong>{{ literals?.state_detail?.population }}: </strong>{{ state.totalPopulation }}</p>
+                <p><strong>{{ literals?.state_detail?.median_income }}: </strong>$ {{ state.medianIncome }}</p>
+                <p><strong>{{ literals?.state_detail?.poverty }}: </strong>{{ state.peopleInPoverty }} ({{ povertyPercentage.toFixed(2) }}%)</p>
+                <p><strong>{{ literals?.state_detail?.unemployed }}: </strong>{{ state.unemployed }} ({{ unemployedPercentage.toFixed(2) }}%)</p>
+                <p><strong>{{ literals?.state_detail?.home_value }}: </strong>$ {{ state.medianHomeValue }}</p>
+                <p><strong>{{ literals?.state_detail?.rent }}: </strong>$ {{ state.medianRent }}</p>
+                <p><strong>{{ literals?.state_detail?.no_insurance }}: </strong>{{ state.noHealthInsurance }} ({{ noInsurancePercentage.toFixed(2) }}%)</p>
             </div>
         </div>
 

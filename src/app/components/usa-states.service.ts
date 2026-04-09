@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { CovidData, StateInterface } from '../components/model/state-interface';
+import { StateInterface } from '../components/model/state-interface';
 import { ViewMode } from './model/view-mode';
 import { Feature } from 'ol';
 import VectorLayer from 'ol/layer/Vector';
@@ -85,17 +85,9 @@ export class UsaStatesService {
     return this.http.get<any>('assets/us-states.geojson');
   }
 
-  getPopulationByState(name: string): Observable<number | null> {
-    return this.http.get<any[]>('assets/us-states-population.json').pipe(
-      map((data) => {
-        const stateData = data.find(state => state.name.toLowerCase() === name.toLowerCase());
-        return stateData ? +stateData.population.replace(/,/g, '') : null;
-      })
-    );
-  }
-
-  getCovidData(state: string): Observable<CovidData> {
-    return this.http.get<any>(`https://api.covidtracking.com/v1/states/${state.toLocaleLowerCase()}/current.json`);
+  getCensusData(): Observable<any[]> {
+    const url = 'https://api.census.gov/data/2023/acs/acs5?get=NAME,B01003_001E,B19013_001E,B17001_002E,B23025_005E,B23025_004E,B25077_001E,B25064_001E,B15003_022E,B27001_001E&for=state:*';
+    return this.http.get<any[]>(url);
   }
 
   getCleanAll(): Observable<void | null> {
