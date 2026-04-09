@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { View, Map, Feature } from 'ol';
 import { OSM } from 'ol/source';
+import XYZ from 'ol/source/XYZ';
 import { Vector as VectorLayer } from 'ol/layer';
 import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
@@ -97,7 +98,12 @@ export class UsaMapComponent {
     public dialog: MatDialog,
     public languageService: LanguageService,
     public themeService: ThemeService
-  ) { }
+  ) {
+    effect(() => {
+      this.themeService.isDark();
+      this.syncBaseLayerFromTheme();
+    });
+  }
 
   changeLanguage(lang: string) {
     this.languageService.changeLanguage(lang);
@@ -247,6 +253,41 @@ export class UsaMapComponent {
 
     this.map.on('pointermove', (event) => this.handlePointerMove(event));
     this.map.on('singleclick', (event) => this.handleMapClick(event));
+
+    this.syncBaseLayerFromTheme();
+  }
+
+  /** Capa base OSM en modo claro, Carto Dark en modo oscuro (ThemeService). */
+  private syncBaseLayerFromTheme(): void {
+    if (!this.map) {
+      return;
+    }
+    const layers = this.map.getLayers();
+    const isDark = this.themeService.isDark();
+
+    // Sustituir la capa Tile completa (no solo setSource) para vaciar caché de teselas
+    // y evitar fondos blancos / mezcla al hacer zoom tras cambiar de tema.
+    const newBase = new TileLayer({
+      source: isDark
+        ? new XYZ({
+            url: 'https://{a-c}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
+            crossOrigin: 'anonymous',
+            transition: 0,
+          })
+        : new OSM({
+            attributions: [],
+            transition: 0,
+          }),
+    });
+
+    const first = layers.item(0);
+    if (first instanceof TileLayer) {
+      layers.removeAt(0);
+    }
+    layers.insertAt(0, newBase);
+    newBase.changed();
+    this.map.updateSize();
+    this.map.renderSync();
   }
 
   private handlePointerMove(event: any) {

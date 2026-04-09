@@ -3,6 +3,15 @@
   height: 100%;
 }
 
+/* Color bajo las teselas (OpenLayers); evita destellos blancos al zoom al cambiar OSM ↔ oscuro */
+.map ::ng-deep .ol-viewport {
+  background-color: #aad3df;
+}
+
+:host-context(body.app-dark-theme) .map ::ng-deep .ol-viewport {
+  background-color: #0d0d0d;
+}
+
 .tooltip {
   position: absolute;
   background-color: rgb(78, 78, 78);
