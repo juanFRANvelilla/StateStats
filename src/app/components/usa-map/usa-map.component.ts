@@ -180,8 +180,11 @@ export class UsaMapComponent {
   }
 
   private setSelectedFeature(feature: Feature) {
+    // Quitar estilo propio del Draw para que aplique el estilo de capa (azul / selección).
+    feature.setStyle(undefined);
     this.selectedPolygon = feature;
     this.usaStatesService.setSelectedPolygon(feature);
+    this.polygonVectorLayer?.changed();
   }
 
   private loadGeoJsonData(geojsonObject: any): void {
@@ -206,6 +209,7 @@ export class UsaMapComponent {
 
     this.polygonVectorLayer = new VectorLayer({
       source: this.polygonVectorSource,
+      style: (feature) => this.getPolygonFeatureStyle(feature as Feature),
     });
     this.polygonVectorLayer.set('name', 'PolygonLayer');
 
@@ -468,19 +472,8 @@ export class UsaMapComponent {
     const geom = new constr(geometry);
     const feature = new Feature();
     feature.setGeometry(geom);
-    feature.setStyle(
-      new Style({
-        fill: new Fill({
-          color: `rgba(${Math.random() * 255}, ${Math.random() *
-            255}, ${Math.random() * 255}, .4)`
-        }),
-        stroke: new Stroke({
-          width: 1,
-          color: "transparent"
-        })
-      })
-    );
     this.polygonVectorSource.addFeature(feature);
+    this.polygonVectorLayer?.changed();
   }
 
   split(polyCoords: any, lineCoords: any) {
@@ -765,7 +758,13 @@ export class UsaMapComponent {
       this.selectedPolygon!.getGeometry() as Polygon;
     this.selectStatesByPolygon(polygonGeometry, false);
 
-    if (this.initialCenter && this.initialZoom !== null) {
+    const isLastPolygon =
+      this.polygonVectorSource.getFeatures().length <= 1;
+    if (
+      isLastPolygon &&
+      this.initialCenter &&
+      this.initialZoom !== null
+    ) {
       this.map.getView().setCenter(fromLonLat(this.initialCenter));
       this.map.getView().setZoom(this.initialZoom);
     }
@@ -774,6 +773,7 @@ export class UsaMapComponent {
     this.polygonVectorSource.removeFeature(this.selectedPolygon!);
     this.selectedPolygon = null;
     this.usaStatesService.setSelectedPolygon(null);
+    this.polygonVectorLayer?.changed();
     this.updateSelectedStatesByPolygon();
   }
 
@@ -926,6 +926,22 @@ export class UsaMapComponent {
 
   }
 
+  /** Polígonos dibujados: resalta en azul el que está seleccionado (p. ej. para borrar). */
+  private getPolygonFeatureStyle(feature: Feature): Style {
+    const selected = this.selectedPolygon === feature;
+    return new Style({
+      stroke: new Stroke({
+        color: selected ? 'rgb(37, 99, 235)' : 'rgba(59, 130, 246, 0.9)',
+        width: selected ? 3 : 2,
+      }),
+      fill: new Fill({
+        color: selected
+          ? 'rgba(147, 197, 253, 0.5)'
+          : 'rgba(96, 165, 250, 0.28)',
+      }),
+    });
+  }
+
   private getStyle(feature: any) {
     const properties = feature.getProperties();
     const featureCode = properties['ste_code']
@@ -940,11 +956,11 @@ export class UsaMapComponent {
     if (filterState?.selected) {
       return new Style({
         stroke: new Stroke({
-          color: 'red',
+          color: 'rgb(59, 130, 246)',
           width: 2,
         }),
         fill: new Fill({
-          color: 'rgba(255, 105, 180, 1)',
+          color: 'rgba(147, 197, 253, 0.65)',
         }),
       });
     }
