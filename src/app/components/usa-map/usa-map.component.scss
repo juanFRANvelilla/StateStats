@@ -58,6 +58,15 @@
   gap: 3px;
 }
 
+.tool-tooltip-wrap {
+  display: inline-block;
+  line-height: 0;
+
+  .feature-buttons:disabled {
+    pointer-events: none;
+  }
+}
+
 
 
 .modeView-buttons {

@@ -22,38 +22,54 @@
   </div>
 
   <div class="polygon-buttons position-absolute bottom-position ms-2">
-    <button [title]="literals?.usa_map?.draw_polygon" (click)="activateDrawPolygon()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': drawPolygon !== null }">
-      <i class="bi bi-hexagon"></i>
-    </button>
-    <button [title]="literals?.usa_map?.edit_vertices" (click)="activateModifyTool()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': modifyInteraction !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-arrows-angle-contract"></i>
-    </button>
-    <button [title]="literals?.usa_map?.move_polygon" (click)="activateTranformTool()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': translateInteraction !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-arrows-move"></i>
-    </button>
-    <button [title]="literals?.usa_map?.split_polygon" (click)="activateDrawLine()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': drawLine !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-slash-lg"></i>
-    </button>
-    <button [title]="literals?.usa_map?.cut_polygon" (click)="intersectPolygons()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': drawPolygonCut !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-scissors"></i>
-    </button>
-    <button [title]="literals?.usa_map?.add_area" (click)="unionPolygons()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-intersect"></i>
-    </button>
-    <button [title]="literals?.usa_map?.extract_area" (click)="intersectContainPolygon()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }" [disabled]="!hasDrwanPolygons()">
-      <i class="bi bi-box-arrow-in-down"></i>
-    </button>
-    <button [title]="literals?.usa_map?.add_geojson" (click)="setDragAndDropInteraction()" class="btn feature-buttons"
-      [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
-      <i class="bi bi-file-earmark-plus"></i>
-    </button>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above">
+      <button type="button" (click)="activateDrawPolygon()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': drawPolygon !== null }">
+        <i class="bi bi-hexagon"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.edit_vertices" matTooltipPosition="above">
+      <button type="button" (click)="activateModifyTool()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': modifyInteraction !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-arrows-angle-contract"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.move_polygon" matTooltipPosition="above">
+      <button type="button" (click)="activateTranformTool()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': translateInteraction !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-arrows-move"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.split_polygon" matTooltipPosition="above">
+      <button type="button" (click)="activateDrawLine()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': drawLine !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-slash-lg"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.cut_polygon" matTooltipPosition="above">
+      <button type="button" (click)="intersectPolygons()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': drawPolygonCut !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-scissors"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.add_area" matTooltipPosition="above">
+      <button type="button" (click)="unionPolygons()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-intersect"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.extract_area" matTooltipPosition="above">
+      <button type="button" (click)="intersectContainPolygon()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }" [disabled]="!hasDrwanPolygons()">
+        <i class="bi bi-box-arrow-in-down"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.add_geojson" matTooltipPosition="above">
+      <button type="button" (click)="setDragAndDropInteraction()" class="btn feature-buttons"
+        [ngClass]="{ 'btn-selected': dragAndDropInteraction !== null }">
+        <i class="bi bi-file-earmark-plus"></i>
+      </button>
+    </span>
 
   </div>
 

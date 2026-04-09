@@ -38,6 +38,7 @@ import {
 import { Vector as VectorSource } from 'ol/source.js';
 import { ViewMode } from '../model/view-mode';
 import { LayerSelected } from '../model/layer-selected';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-usa-map',
@@ -47,6 +48,7 @@ import { LayerSelected } from '../model/layer-selected';
     FormsModule,
     CommonModule,
     StateComparedComponent,
+    MatTooltipModule,
   ],
   templateUrl: './usa-map.component.html',
   styleUrl: './usa-map.component.scss',
