@@ -10,17 +10,19 @@
             </thead>
         </table>
 
-        <div class="table-body-scroll">
+        <div class="table-body-scroll elegant-scroll">
             <table class="table table-hover table-bordered state-list w-100">
                 <tbody>
-                    <tr *ngFor="let state of stateList" [class.table-active]="state.selected">
+                    <tr *ngFor="let state of stateList" [class.table-active]="state.selected"
+                        class="state-table-row" (click)="onStateRowClick($event, state)">
                         <td class="text-center align-middle state-select-col">
                             <input type="checkbox" [(ngModel)]="state.selected" (change)="onSelectedChange(state)"
-                                class="form-check-input" />
+                                (click)="$event.stopPropagation()" class="form-check-input" />
                         </td>
                         <td class="align-middle state-name-col">{{ state.name }}</td>
                         <td class="text-center align-middle view-detail-col">
-                            <button (click)="viewDetails(state)" class="btn btn-primary btn-sm">
+                            <button type="button" (click)="viewDetails(state); $event.stopPropagation()"
+                                class="btn btn-primary btn-sm">
                                 <i class="bi bi-eye"></i>
                             </button>
                         </td>
@@ -40,7 +42,7 @@
 </div>
 
 <div *ngIf="viewMode == ViewMode.LAYERS">
-    <div class="scroll-container">
+    <div class="scroll-container layers-scroll elegant-scroll">
         <table class="table table-hover table-responsive state-list w-100">
             <thead>
                 <tr>

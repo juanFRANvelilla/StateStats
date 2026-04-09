@@ -79,6 +79,21 @@ export class StatesListComponent {
     this.usaStatesService.selectState(stateSelected, stateSelected.selected!);
   }
 
+  onStateRowClick(event: MouseEvent, state: StateInterface) {
+    const target = event.target as HTMLElement | null;
+    if (!target) {
+      return;
+    }
+    if (target.closest('.view-detail-col')) {
+      return;
+    }
+    if (target.closest('input[type="checkbox"]')) {
+      return;
+    }
+    state.selected = !state.selected;
+    this.onSelectedChange(state);
+  }
+
   openComparedComponent() {
     const statesToCompare = this.stateList.filter(state => state.selected);
     if (statesToCompare.length > 1) {
