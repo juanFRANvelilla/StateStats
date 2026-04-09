@@ -17,7 +17,6 @@ import { LayerSelected } from '../model/layer-selected';
 
 
 import { LanguageService } from '../../services/language.service';
-
 @Component({
   selector: 'app-states-list',
   standalone: true,

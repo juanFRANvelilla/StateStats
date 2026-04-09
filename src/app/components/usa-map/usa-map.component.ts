@@ -39,6 +39,7 @@ import { Vector as VectorSource } from 'ol/source.js';
 import { ViewMode } from '../model/view-mode';
 import { LayerSelected } from '../model/layer-selected';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-usa-map',
@@ -94,7 +95,8 @@ export class UsaMapComponent {
   constructor(
     private usaStatesService: UsaStatesService,
     public dialog: MatDialog,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    public themeService: ThemeService
   ) { }
 
   changeLanguage(lang: string) {

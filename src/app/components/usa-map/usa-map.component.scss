@@ -16,7 +16,9 @@
 }
 
 .nav-container {
-  height: 42px;
+  max-height: 42px;
+  padding: 6px 10px 8px;
+  box-sizing: border-box;
 }
 
 .search-container {

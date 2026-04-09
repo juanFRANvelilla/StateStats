@@ -1,0 +1,298 @@
+/**
+ * Debe cargarse DESPUÉS de Bootstrap para que el modo oscuro aplique a .table y .form-control.
+ */
+
+/* Modales embebidos y Material */
+body.app-dark-theme {
+  app-state-detail .modal-content.bg-white,
+  app-state-compared .modal-content.bg-white {
+    background-color: #1e222b !important;
+    color: #e8e8ec !important;
+  }
+
+  app-state-detail .expandable-content[style*="background"],
+  app-state-compared .expandable-content[style*="background"] {
+    background: #1a1d26 !important;
+    color: #e8e8ec !important;
+  }
+
+  app-state-detail h2,
+  app-state-compared h3,
+  app-state-compared p {
+    color: #e8e8ec;
+  }
+
+  app-state-compared .text-secondary {
+    color: #9ca3b8 !important;
+  }
+
+  app-state-detail .btn-close,
+  app-state-compared .btn-close {
+    filter: invert(1);
+  }
+}
+
+body.app-dark-theme .cdk-overlay-container .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: #1e222b;
+}
+
+body.app-dark-theme .cdk-overlay-container .mat-mdc-dialog-surface {
+  background-color: #1e222b !important;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme .cdk-overlay-container app-error-dialog .modal-content {
+  background-color: #2a1f1f !important;
+  color: #e8e8ec;
+  border: 1px solid #4a3030;
+}
+
+/* Barra superior del mapa: fondo y controles */
+body.app-dark-theme app-usa-map .nav-container {
+  background: linear-gradient(180deg, #222831 0%, #1a1d26 100%);
+  border: 1px solid #2f3545;
+  border-top: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+body.app-dark-theme app-usa-map .nav-container .search-container .form-control {
+  --bs-body-bg: #2a3142;
+  --bs-border-color: #3d465a;
+  background-color: #2a3142 !important;
+  border-color: #3d465a !important;
+  color: #e8e8ec !important;
+}
+
+body.app-dark-theme app-usa-map .nav-container .search-container .form-control::placeholder {
+  color: #8b92a5;
+}
+
+body.app-dark-theme app-usa-map .nav-container .search-container .bi-search {
+  color: #a8b0c4;
+}
+
+body.app-dark-theme app-usa-map .filtered-list-container {
+  background-color: #1e222b;
+  border-color: #3a4152;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme app-usa-map .filtered-list-container p:hover {
+  background-color: #2a3142;
+}
+
+body.app-dark-theme app-usa-map .lang-select {
+  --bs-body-bg: transparent;
+  color: #e8e8ec !important;
+  background-color: #2a3142 !important;
+  border-color: #3d465a !important;
+}
+
+body.app-dark-theme app-usa-map .lang-select:focus {
+  background-color: #2a3142 !important;
+  border-color: #5c6bc0 !important;
+  color: #e8e8ec !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e8e8ec' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 11 6-6 6 6'/%3e%3c/svg%3e");
+}
+
+body.app-dark-theme app-usa-map .lang-select option {
+  background-color: #1e222b;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme app-usa-map .dialog-content {
+  background-color: #252830;
+  color: #e8e8ec;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Lista de estados: tabla Bootstrap + celdas */
+body.app-dark-theme .app-states-list {
+  display: block;
+  background-color: #12141a;
+  color: #e8e8ec;
+  min-height: 100vh;
+}
+
+body.app-dark-theme .app-states-list .principal-container {
+  background-color: #12141a;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme .app-states-list .scroll-container {
+  background-color: #12141a;
+}
+
+body.app-dark-theme .app-states-list .table-body-scroll {
+  background-color: #12141a;
+}
+
+/* Variables de tabla BS5 + color explícito en celdas */
+body.app-dark-theme .app-states-list table.table.state-list {
+  --bs-table-color: #e8e8ec;
+  --bs-table-bg: #12141a;
+  --bs-table-border-color: #2f3545;
+  --bs-table-striped-bg: #181b24;
+  --bs-table-striped-color: #e8e8ec;
+  --bs-table-hover-bg: #252a38;
+  --bs-table-hover-color: #e8e8ec;
+  --bs-table-active-bg: #145038;
+  --bs-table-active-color: #e8f5ef;
+  color: #e8e8ec !important;
+  background-color: #12141a !important;
+  border-color: #2f3545 !important;
+}
+
+body.app-dark-theme .app-states-list table.table.state-list > :not(caption) > * > * {
+  border-color: #2f3545 !important;
+  color: #e8e8ec !important;
+  box-shadow: none;
+}
+
+body.app-dark-theme .app-states-list .header-table thead th {
+  background-color: #1a1d26 !important;
+  color: #e8e8ec !important;
+  border-color: #2f3545 !important;
+}
+
+body.app-dark-theme .app-states-list .table-body-scroll table tbody td {
+  background-color: #151820 !important;
+  color: #e8e8ec !important;
+  border-color: #2f3545 !important;
+}
+
+body.app-dark-theme .app-states-list .table-body-scroll table tbody tr:nth-child(even):not(.table-active) td {
+  background-color: #181b24 !important;
+}
+
+body.app-dark-theme .app-states-list .table-hover tbody tr:hover:not(.table-active) td {
+  --bs-table-hover-bg: #252a38;
+  background-color: #252a38 !important;
+  color: #e8e8ec !important;
+}
+
+/* Filas seleccionadas: un solo verde oscuro (sin alternar con el rayado) */
+body.app-dark-theme .app-states-list .table-body-scroll table tbody tr.table-active td,
+body.app-dark-theme .app-states-list .table-body-scroll table tbody tr:nth-child(odd).table-active td,
+body.app-dark-theme .app-states-list .table-body-scroll table tbody tr:nth-child(even).table-active td {
+  background-color: #145038 !important;
+  color: #e8f5ef !important;
+}
+
+body.app-dark-theme .app-states-list .table-body-scroll table tbody tr.table-active {
+  background-color: #145038 !important;
+}
+
+body.app-dark-theme .app-states-list .table-hover tbody tr.table-active:hover td {
+  background-color: #145038 !important;
+  color: #e8f5ef !important;
+}
+
+body.app-dark-theme .app-states-list .form-check-input {
+  --bs-form-check-bg: #2a3142;
+  border-color: #5a6378;
+}
+
+body.app-dark-theme .app-states-list .form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+body.app-dark-theme .app-states-list .state-list button {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+body.app-dark-theme .app-states-list .state-list button:hover {
+  background-color: #a71d2a;
+}
+
+body.app-dark-theme .app-states-list .modal-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+body.app-dark-theme .app-states-list .modal-content {
+  background: #1e222b;
+  color: #e8e8ec;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+body.app-dark-theme .app-states-list .expandable-container {
+  border-color: #3a4152;
+}
+
+body.app-dark-theme .app-states-list .expandable-header {
+  background-color: #252830;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme .app-states-list .expandable-header:hover {
+  background-color: #2d3340;
+}
+
+body.app-dark-theme .app-states-list .expandable-content {
+  border-top-color: #3a4152;
+  background-color: #1a1d26 !important;
+  color: #e8e8ec;
+}
+
+body.app-dark-theme .app-states-list .polygon-area-container {
+  background-color: #1e222b;
+  color: #e8e8ec;
+  border-color: #3a4152;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+body.app-dark-theme .app-states-list .blue-theme {
+  color: #6ea8fe;
+  border-color: #6ea8fe;
+}
+
+body.app-dark-theme .app-states-list .red-theme {
+  color: #ff7b7b;
+  border-color: #ff7b7b;
+}
+
+body.app-dark-theme .app-states-list .elegant-scroll {
+  scrollbar-color: rgba(110, 168, 254, 0.45) rgba(255, 255, 255, 0.06);
+}
+
+body.app-dark-theme .app-states-list .elegant-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.app-dark-theme .app-states-list .elegant-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(110, 168, 254, 0.5) 0%, rgba(110, 168, 254, 0.75) 100%);
+}
+
+body.app-dark-theme .app-states-list .elegant-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(110, 168, 254, 0.75) 0%, rgba(90, 140, 220, 0.9) 100%);
+}
+
+body.app-dark-theme .app-states-list .btn-primary.btn-lg {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: #fff;
+}
+
+body.app-dark-theme .app-states-list .btn-warning.btn-lg {
+  background-color: #d39e00;
+  border-color: #d39e00;
+  color: #12141a;
+}
+
+/* Vista capas: misma tabla */
+body.app-dark-theme .app-states-list .layers-scroll table.table {
+  --bs-table-color: #e8e8ec;
+  --bs-table-bg: #12141a;
+  --bs-table-border-color: #2f3545;
+  color: #e8e8ec !important;
+  background-color: #12141a !important;
+}
+
+body.app-dark-theme .app-states-list .layers-scroll table td,
+body.app-dark-theme .app-states-list .layers-scroll table th {
+  background-color: #151820 !important;
+  color: #e8e8ec !important;
+  border-color: #2f3545 !important;
+}
