@@ -297,9 +297,11 @@ export class UsaMapComponent {
   private handlePointerMove(event: any) {
     if (!this.disabledActions) {
       const pixel = this.map.getEventPixel(event.originalEvent);
+      // Solo capa de estados: la capa de polígonos está encima y ocultaría el estado bajo el cursor.
       const feature = this.map.forEachFeatureAtPixel(
         pixel,
-        (feature) => feature
+        (feature) => feature,
+        { layerFilter: (layer) => layer.get('name') === 'StatesLayer' }
       );
 
       if (feature && feature.getProperties()['ste_code']) {
@@ -316,19 +318,26 @@ export class UsaMapComponent {
   private handleMapClick(event: any) {
     if (!this.disabledActions) {
       const pixel = this.map.getEventPixel(event.originalEvent);
-      const feature = this.map.forEachFeatureAtPixel(
+
+      const polygonFeature = this.map.forEachFeatureAtPixel(
         pixel,
-        (feature) => feature
+        (feature) => feature,
+        { layerFilter: (layer) => layer.get('name') === 'PolygonLayer' }
       ) as Feature<Geometry> | undefined;
 
-      if (feature) {
-        const properties = feature.getProperties();
+      if (polygonFeature) {
+        this.setSelectedFeature(polygonFeature);
+        return;
+      }
 
-        // probar si hay codigo para comprobar que no es una feature de estado
-        if (!properties['ste_code']) {
-          this.setSelectedFeature(feature);
-        }
+      const stateFeature = this.map.forEachFeatureAtPixel(
+        pixel,
+        (feature) => feature,
+        { layerFilter: (layer) => layer.get('name') === 'StatesLayer' }
+      ) as Feature<Geometry> | undefined;
 
+      if (stateFeature) {
+        const properties = stateFeature.getProperties();
         const selectedState = this.stateList.find(
           (state) => state.code === properties['ste_code'][0]
         );
@@ -337,11 +346,7 @@ export class UsaMapComponent {
             selectedState,
             !selectedState.selected
           );
-        } else {
-          console.log('No state found with the given code.');
         }
-      } else {
-        console.log('No state found with the given code.');
       }
     }
   }
