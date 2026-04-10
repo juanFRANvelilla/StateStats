@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
       return;
     }
     this.sheetDragging = false;
-    if (this.sheetHeightPercent < 35) {
+    if (this.sheetHeightPercent < 30) {
       this.sheetHeightPercent = 0;
     } else if (this.sheetHeightPercent > 80) {
       this.sheetHeightPercent = 100;
