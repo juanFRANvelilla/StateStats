@@ -20,7 +20,7 @@
       </label>
     </div>
     <select #langSelect class="form-select lang-select" style="width: auto; cursor: pointer;" [(ngModel)]="currentLang"
-      (change)="changeLanguage(currentLang); langSelect.blur()">
+      (change)="changeLanguage(currentLang); langSelect.blur()" (blur)="langSelect.blur()">
       <option value="es">ES</option>
       <option value="en">US</option>
     </select>

@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, effect } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, effect } from '@angular/core';
 import { View, Map, Feature } from 'ol';
 import { OSM } from 'ol/source';
 import XYZ from 'ol/source/XYZ';
@@ -56,6 +56,9 @@ import { ThemeService } from '../../services/theme.service';
   styleUrl: './usa-map.component.scss',
 })
 export class UsaMapComponent {
+  @ViewChild('langSelect', { read: ElementRef })
+  private langSelectRef?: ElementRef<HTMLSelectElement>;
+
   private vectorSource!: VectorSource;
   private polygonVectorSource!: VectorSource;
 
@@ -103,6 +106,18 @@ export class UsaMapComponent {
       this.themeService.isDark();
       this.syncBaseLayerFromTheme();
     });
+  }
+
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent) {
+    const selectEl = this.langSelectRef?.nativeElement;
+    if (!selectEl) return;
+
+    const target = event.target as Node | null;
+    const isClickInsideSelect = !!target && selectEl.contains(target);
+    if (!isClickInsideSelect && document.activeElement === selectEl) {
+      selectEl.blur();
+    }
   }
 
   changeLanguage(lang: string) {

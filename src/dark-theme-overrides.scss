@@ -86,13 +86,14 @@ body.app-dark-theme app-usa-map .lang-select {
   color: #e8e8ec !important;
   background-color: #2a3142 !important;
   border-color: #3d465a !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e8e8ec' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
 }
 
 body.app-dark-theme app-usa-map .lang-select:focus {
   background-color: #2a3142 !important;
   border-color: #5c6bc0 !important;
   color: #e8e8ec !important;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e8e8ec' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 11 6-6 6 6'/%3e%3c/svg%3e");
+  background-image: none !important;
 }
 
 body.app-dark-theme app-usa-map .lang-select option {
