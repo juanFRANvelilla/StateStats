@@ -90,6 +90,7 @@ export class UsaMapComponent {
   statesToCompare: StateInterface[] = [];
 
   polygonActionMenuPosition: { leftPx: number; topPx: number } | null = null;
+  currentViewMode: ViewMode = ViewMode.LIST_STATES;
 
   private initialCenter: [number, number] | null = null;
   private initialZoom: number | null = null;
@@ -183,6 +184,10 @@ export class UsaMapComponent {
       mapLayers.forEach((layerSelected) => {
         layerSelected.layer.setVisible(layerSelected.selected);
       });
+    });
+
+    this.usaStatesService.getViewMode().subscribe((viewMode) => {
+      this.currentViewMode = viewMode;
     });
 
     this.usaStatesService.getCleanAll().subscribe(() => {

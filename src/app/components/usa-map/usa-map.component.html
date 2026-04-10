@@ -88,35 +88,40 @@
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <button [title]="literals?.usa_map?.list_states" (click)="changeViewMode(viewMode.LIST_STATES)"
-      class="btn feature-buttons">
-      <i class="bi bi-list-ol"></i>
-    </button>
-    <button [title]="literals?.usa_map?.polygon_area" (click)="changeViewMode(viewMode.POLYGON_AREA)"
-      class="btn feature-buttons" [disabled]="!selectedPolygon">
-      <i class="bi bi-wrench"></i>
-    </button>
-    <button [title]="literals?.usa_map?.manage_layers" (click)="changeViewMode(viewMode.LAYERS)"
-      class="btn feature-buttons">
-      <i class="bi bi-layers"></i>
-    </button>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
+      <button (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
+        <i class="bi bi-list-ol"></i>
+      </button>
+    </span>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.manage_layers" matTooltipPosition="left">
+      <button (click)="changeViewMode(viewMode.LAYERS)" class="btn feature-buttons">
+        <i class="bi bi-layers"></i>
+      </button>
+    </span>
   </div>
 
   <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon && !comparedStates">
-    <button
-      [title]="literals?.usa_map?.delete_polygon"
-      (click)="removeSelectFeature()"
-      class="btn feature-buttons feature-buttons-danger"
-    >
-      <i class="bi bi-trash"></i>
-    </button>
-    <button
-      [title]="literals?.states_list?.compare_button"
-      (click)="openComparedComponent()"
-      class="btn feature-buttons feature-buttons-info"
-    >
-      <i class="bi bi-info-circle"></i>
-    </button>
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.delete_polygon" matTooltipPosition="left">
+      <button (click)="removeSelectFeature()" class="btn feature-buttons feature-buttons-danger">
+        <i class="bi bi-trash"></i>
+      </button>
+    </span>
+
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.states_list?.compare_states_tooltip" matTooltipPosition="left">
+      <button (click)="openComparedComponent()" class="btn feature-buttons feature-buttons-info">
+        <i class="bi bi-grid-3x3-gap"></i>
+      </button>
+    </span>
+
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.polygon_info" matTooltipPosition="left">
+      <button
+        (click)="changeViewMode(viewMode.POLYGON_AREA)"
+        class="btn feature-buttons feature-buttons-info"
+        [disabled]="currentViewMode === viewMode.POLYGON_AREA"
+      >
+        <i class="bi bi-info-circle"></i>
+      </button>
+    </span>
   </div>
 
   <div id="map" class="map" style="width: 100%; height: 100vh">
