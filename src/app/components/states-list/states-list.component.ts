@@ -69,6 +69,10 @@ export class StatesListComponent {
     this.stateSelected = state;
   }
 
+  isCompareDisabled(): boolean {
+    return this.stateList.filter(s => s.selected).length < 2;
+  }
+
   closeModal() {
     this.stateSelected = undefined;
     this.comparedStates = false;
