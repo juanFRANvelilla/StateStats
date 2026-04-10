@@ -987,13 +987,13 @@ export class UsaMapComponent {
     const selected = this.selectedPolygon === feature;
     return new Style({
       stroke: new Stroke({
-        color: selected ? 'rgb(37, 99, 235)' : 'rgba(59, 130, 246, 0.9)',
+        color: selected ? 'rgb(255, 0, 132)' : 'rgba(59, 130, 246, 1)',
         width: selected ? 3 : 2,
       }),
       fill: new Fill({
         color: selected
-          ? 'rgba(147, 197, 253, 0.5)'
-          : 'rgba(96, 165, 250, 0.28)',
+          ? 'rgba(255, 0, 132, 0.35)'
+          : 'rgba(96, 165, 250, 0.12)',
       }),
     });
   }
@@ -1007,18 +1007,6 @@ export class UsaMapComponent {
     let filterState: StateInterface | undefined;
     if (featureCode) {
       filterState = this.stateList.find((state) => state.code === featureCode);
-    }
-
-    if (filterState?.selected) {
-      return new Style({
-        stroke: new Stroke({
-          color: 'rgb(59, 130, 246)',
-          width: 2,
-        }),
-        fill: new Fill({
-          color: 'rgba(147, 197, 253, 0.65)',
-        }),
-      });
     }
 
     if (!filterState || !filterState.totalPopulation) {
@@ -1042,6 +1030,28 @@ export class UsaMapComponent {
       fillColor = 'rgb(255, 165, 0)';
     } else if (povertyRatio >= 0.11) {
       fillColor = 'rgb(255, 255, 0)';
+    }
+
+    // Si está seleccionado: mantener el color por pobreza (verde/amarillo/naranja/rojo)
+    if (filterState.selected) {
+      const base = new Style({
+        stroke: new Stroke({
+          color: 'rgb(59, 130, 246)',
+          width: 2,
+        }),
+        fill: new Fill({
+          color: fillColor,
+        }),
+      });
+
+      // “Velo” azul encima para dar tono azulado sin perder el gradiente de pobreza.
+      const blueTint = new Style({
+        fill: new Fill({
+          color: 'rgba(59, 130, 246, 0.55)',
+        }),
+      });
+
+      return [base, blueTint];
     }
 
     return new Style({
