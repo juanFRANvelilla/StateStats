@@ -280,9 +280,23 @@ body.app-dark-theme .app-states-list .elegant-scroll::-webkit-scrollbar-thumb:ho
   background: linear-gradient(180deg, rgba(110, 168, 254, 0.75) 0%, rgba(90, 140, 220, 0.9) 100%);
 }
 
-body.app-dark-theme .app-states-list .btn-primary.btn-lg {
+/* Comparar / detalle: también fuera de .app-states-list (modal en app-root) */
+body.app-dark-theme .app-states-list .btn-primary.btn-lg,
+body.app-dark-theme app-state-compared .btn-primary.btn-lg,
+body.app-dark-theme app-state-detail .btn-primary.btn-lg {
   background-color: #0d6efd;
   border-color: #0d6efd;
+  color: #fff;
+}
+
+body.app-dark-theme .app-states-list .btn-primary.btn-lg:hover,
+body.app-dark-theme app-state-compared .btn-primary.btn-lg:hover,
+body.app-dark-theme app-state-detail .btn-primary.btn-lg:hover,
+body.app-dark-theme .app-states-list .btn-primary.btn-lg:focus,
+body.app-dark-theme app-state-compared .btn-primary.btn-lg:focus,
+body.app-dark-theme app-state-detail .btn-primary.btn-lg:focus {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
   color: #fff;
 }
 
