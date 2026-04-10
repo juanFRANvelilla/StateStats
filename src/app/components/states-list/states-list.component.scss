@@ -184,7 +184,7 @@
 }
 
 .scroll-container {
-    max-height: 100%;
+    max-height: calc(100dvh - 62px);
     border-radius: 4px;
     width: 100%;
     overflow: hidden; 
