@@ -134,6 +134,11 @@
   bottom: 6px;
 }
 
+:host(.usa-map--mobile) .modeView-buttons.bottom-position {
+  bottom: 5rem;
+  left: .5rem
+}
+
 .btn[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
