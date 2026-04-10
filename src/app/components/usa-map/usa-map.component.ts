@@ -75,7 +75,7 @@ export class UsaMapComponent implements OnChanges {
   @Input() mobileSheetClosed = true;
   /** Altura del panel inferior (% del viewport); para redimensionar el mapa al hacer swipe. */
   @Input() mobileSheetHeightPercent = 0;
-  @Output() mobileOpenStatesList = new EventEmitter<void>();
+  @Output() mobileOpenSheet = new EventEmitter<void>();
 
   @ViewChild('langSelect', { read: ElementRef })
   private langSelectRef?: ElementRef<HTMLSelectElement>;
@@ -172,10 +172,6 @@ export class UsaMapComponent implements OnChanges {
         this.map?.renderSync();
       }, 0);
     }
-  }
-
-  openMobileStatesPanel(): void {
-    this.mobileOpenStatesList.emit();
   }
 
   ngOnInit(): void {
@@ -1268,12 +1264,34 @@ export class UsaMapComponent implements OnChanges {
     this.usaStatesService.setViewMode(viewMode);
   }
 
-  /** Lista de estados: en móvil, si el panel está cerrado, abrirlo al elegir esta vista. */
-  onListStatesOrOpenSheet(): void {
+  /**
+   * En móvil: abre el panel inferior (si estaba cerrado) y muestra lista de estados o gestión de capas.
+   * En escritorio: solo cambia la vista en el panel lateral.
+   */
+  openMobilePanelWithViewMode(mode: ViewMode): void {
     if (this.mobileLayout && this.mobileSheetClosed) {
-      this.mobileOpenStatesList.emit();
+      this.mobileOpenSheet.emit();
     }
-    this.changeViewMode(ViewMode.LIST_STATES);
+    this.changeViewMode(mode);
+  }
+
+  /** Info del polígono: en móvil abre el panel inferior si estaba cerrado. */
+  openPolygonInfoPanel(): void {
+    if (this.mobileLayout && this.mobileSheetClosed) {
+      this.mobileOpenSheet.emit();
+    }
+    this.changeViewMode(ViewMode.POLYGON_AREA);
+  }
+
+  /**
+   * Escritorio: deshabilitado si ya estás en la vista de área del polígono.
+   * Móvil: solo deshabilitado si el panel swipe está abierto y ya muestra esa vista (datos del polígono en el panel).
+   */
+  get isPolygonInfoButtonDisabled(): boolean {
+    if (this.mobileLayout) {
+      return !this.mobileSheetClosed && this.currentViewMode === ViewMode.POLYGON_AREA;
+    }
+    return this.currentViewMode === ViewMode.POLYGON_AREA;
   }
 
   existLayerName(name: string): boolean {

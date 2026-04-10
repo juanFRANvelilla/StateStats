@@ -39,13 +39,6 @@
     class="polygon-tools-stack position-absolute bottom-position"
     [class.ms-2]="!mobileLayout"
   >
-    <div *ngIf="mobileLayout && mobileSheetClosed" class="mobile-open-list-row">
-      <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.open_states_list" matTooltipPosition="above">
-        <button type="button" (click)="openMobileStatesPanel()" class="btn feature-buttons feature-buttons-mobile-open-list">
-          <i class="bi bi-chevron-right"></i>
-        </button>
-      </span>
-    </div>
     <div class="polygon-buttons">
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above">
       <button type="button" (click)="activateDrawPolygon()" class="btn feature-buttons"
@@ -101,12 +94,12 @@
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
-      <button (click)="onListStatesOrOpenSheet()" class="btn feature-buttons">
+      <button type="button" (click)="openMobilePanelWithViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
         <i class="bi bi-list-ol"></i>
       </button>
     </span>
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.manage_layers" matTooltipPosition="left">
-      <button (click)="changeViewMode(viewMode.LAYERS)" class="btn feature-buttons">
+      <button type="button" (click)="openMobilePanelWithViewMode(viewMode.LAYERS)" class="btn feature-buttons">
         <i class="bi bi-layers"></i>
       </button>
     </span>
@@ -127,9 +120,10 @@
 
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.polygon_info" matTooltipPosition="left">
       <button
-        (click)="changeViewMode(viewMode.POLYGON_AREA)"
+        type="button"
+        (click)="openPolygonInfoPanel()"
         class="btn feature-buttons feature-buttons-info"
-        [disabled]="currentViewMode === viewMode.POLYGON_AREA"
+        [disabled]="isPolygonInfoButtonDisabled"
       >
         <i class="bi bi-info-circle"></i>
       </button>
