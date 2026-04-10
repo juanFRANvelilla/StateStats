@@ -69,18 +69,6 @@
   gap: 3px;
 }
 
-.polygon-action-menu {
-  z-index: 1100;
-  display: flex;
-  gap: 6px;
-  transform: translate(-50%, calc(-100% - 10px));
-  pointer-events: none;
-
-  .btn {
-    pointer-events: all;
-  }
-}
-
 .tool-tooltip-wrap {
   display: inline-block;
   line-height: 0;

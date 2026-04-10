@@ -102,12 +102,7 @@
     </button>
   </div>
 
-  <div
-    *ngIf="selectedPolygon && polygonActionMenuPosition && !comparedStates"
-    class="polygon-action-menu position-absolute"
-    [style.left.px]="polygonActionMenuPosition.leftPx"
-    [style.top.px]="polygonActionMenuPosition.topPx"
-  >
+  <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon && !comparedStates">
     <button
       [title]="literals?.usa_map?.delete_polygon"
       (click)="removeSelectFeature()"
