@@ -73,6 +73,8 @@ export class UsaMapComponent implements OnChanges {
   @Input() mobileLayout = false;
   /** Panel de lista cerrado (muestra flecha para abrir). */
   @Input() mobileSheetClosed = true;
+  /** Altura del panel inferior (% del viewport); para redimensionar el mapa al hacer swipe. */
+  @Input() mobileSheetHeightPercent = 0;
   @Output() mobileOpenStatesList = new EventEmitter<void>();
 
   @ViewChild('langSelect', { read: ElementRef })
@@ -150,7 +152,19 @@ export class UsaMapComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (
-      (changes['mobileLayout'] || changes['mobileSheetClosed']) &&
+      changes['mobileLayout']?.currentValue === true &&
+      this.dragAndDropInteraction &&
+      this.map
+    ) {
+      this.map.removeInteraction(this.dragAndDropInteraction);
+      this.dragAndDropInteraction = null;
+      this.disabledActions = false;
+    }
+
+    if (
+      (changes['mobileLayout'] ||
+        changes['mobileSheetClosed'] ||
+        changes['mobileSheetHeightPercent']) &&
       this.map
     ) {
       setTimeout(() => {

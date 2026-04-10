@@ -6,8 +6,10 @@
   <div class="app-map-wrap" [class.app-map-wrap--mobile]="isMobile">
     <app-usa-map
       class="app-usa-map"
+      [class.usa-map--mobile]="isMobile"
       [mobileLayout]="isMobile"
       [mobileSheetClosed]="mobileSheetClosed"
+      [mobileSheetHeightPercent]="sheetHeightPercent"
       (mobileOpenStatesList)="openMobileSheet()"
     ></app-usa-map>
   </div>

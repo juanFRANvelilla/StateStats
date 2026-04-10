@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   private sheetDragging = false;
   private dragStartY = 0;
   private dragStartPercent = 0;
+  private sheetResizeRafId = 0;
 
   ngOnInit(): void {
     this.updateMobileLayout();
@@ -83,6 +84,12 @@ export class AppComponent implements OnInit {
     let next = this.dragStartPercent - deltaPct;
     next = Math.max(0, Math.min(100, next));
     this.sheetHeightPercent = next;
+    if (this.sheetResizeRafId === 0) {
+      this.sheetResizeRafId = requestAnimationFrame(() => {
+        this.sheetResizeRafId = 0;
+        this.scheduleMapResize();
+      });
+    }
   }
 
   @HostListener('document:pointerup', ['$event'])
