@@ -69,6 +69,18 @@
   gap: 3px;
 }
 
+.polygon-action-menu {
+  z-index: 1100;
+  display: flex;
+  gap: 6px;
+  transform: translate(-50%, calc(-100% - 10px));
+  pointer-events: none;
+
+  .btn {
+    pointer-events: all;
+  }
+}
+
 .tool-tooltip-wrap {
   display: inline-block;
   line-height: 0;
@@ -117,6 +129,22 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.feature-buttons-danger {
+  background-color: rgba(220, 38, 38, 0.9);
+}
+
+.feature-buttons-danger:hover {
+  background-color: rgba(220, 38, 38, 1);
+}
+
+.feature-buttons-info {
+  background-color: rgba(37, 99, 235, 0.9);
+}
+
+.feature-buttons-info:hover {
+  background-color: rgba(37, 99, 235, 1);
 }
 
 .feature-buttons:hover {

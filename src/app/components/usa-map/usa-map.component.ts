@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component, ElementRef, HostListener, ViewChild, effect } from '@angular/core';
-import { View, Map, Feature } from 'ol';
+import { View, Map as OlMap, Feature } from 'ol';
 import { OSM } from 'ol/source';
 import XYZ from 'ol/source/XYZ';
 import { Vector as VectorLayer } from 'ol/layer';
@@ -29,6 +29,7 @@ import booleanIntersects from '@turf/boolean-intersects';
 import * as turfHelpers from "@turf/helpers";
 import turfDifference from '@turf/difference';
 import pointInPolygon from "@turf/boolean-point-in-polygon";
+import Point from 'ol/geom/Point';
 import {
   DragAndDrop,
 } from 'ol/interaction.js';
@@ -63,7 +64,7 @@ export class UsaMapComponent {
   private polygonVectorSource!: VectorSource;
 
   private polygonVectorLayer!: VectorLayer;
-  private map!: Map;
+  private map!: OlMap;
   tooltipElement!: HTMLElement;
   private stateList: StateInterface[] = [];
   filteredStateList: StateInterface[] = [];
@@ -87,6 +88,8 @@ export class UsaMapComponent {
 
   comparedStates: boolean = false;
   statesToCompare: StateInterface[] = [];
+
+  polygonActionMenuPosition: { leftPx: number; topPx: number } | null = null;
 
   private initialCenter: [number, number] | null = null;
   private initialZoom: number | null = null;
@@ -200,6 +203,29 @@ export class UsaMapComponent {
     this.selectedPolygon = feature;
     this.usaStatesService.setSelectedPolygon(feature);
     this.polygonVectorLayer?.changed();
+    this.updatePolygonActionMenuPosition();
+  }
+
+  private updatePolygonActionMenuPosition(): void {
+    if (!this.map || !this.selectedPolygon) {
+      this.polygonActionMenuPosition = null;
+      return;
+    }
+    const geom = this.selectedPolygon.getGeometry();
+    if (!(geom instanceof Polygon)) {
+      this.polygonActionMenuPosition = null;
+      return;
+    }
+
+    // Anclar el menú cerca del polígono, usando su punto interior (estable incluso con polígonos cóncavos).
+    const interior = geom.getInteriorPoint();
+    const coord =
+      interior instanceof Point ? interior.getCoordinates() : geom.getFirstCoordinate();
+    const pixel = this.map.getPixelFromCoordinate(coord);
+    this.polygonActionMenuPosition = {
+      leftPx: Math.round(pixel[0]),
+      topPx: Math.round(pixel[1]),
+    };
   }
 
   private loadGeoJsonData(geojsonObject: any): void {
@@ -256,7 +282,7 @@ export class UsaMapComponent {
       }),
     });
 
-    this.map = new Map({
+    this.map = new OlMap({
       target: 'map',
       layers: [osmLayer],
       view: new View({
@@ -272,6 +298,7 @@ export class UsaMapComponent {
 
     this.map.on('pointermove', (event) => this.handlePointerMove(event));
     this.map.on('singleclick', (event) => this.handleMapClick(event));
+    this.map.on('moveend', () => this.updatePolygonActionMenuPosition());
 
     this.syncBaseLayerFromTheme();
   }
@@ -343,6 +370,14 @@ export class UsaMapComponent {
       if (polygonFeature) {
         this.setSelectedFeature(polygonFeature);
         return;
+      }
+
+      // Click fuera de cualquier polígono: cerrar menú contextual
+      if (this.selectedPolygon) {
+        this.selectedPolygon = null;
+        this.usaStatesService.setSelectedPolygon(null);
+        this.polygonActionMenuPosition = null;
+        this.polygonVectorLayer?.changed();
       }
 
       const stateFeature = this.map.forEachFeatureAtPixel(
@@ -793,6 +828,7 @@ export class UsaMapComponent {
     this.polygonVectorSource.removeFeature(this.selectedPolygon!);
     this.selectedPolygon = null;
     this.usaStatesService.setSelectedPolygon(null);
+    this.polygonActionMenuPosition = null;
     this.polygonVectorLayer?.changed();
     this.updateSelectedStatesByPolygon();
   }
@@ -1019,15 +1055,39 @@ export class UsaMapComponent {
     });
   }
 
-  openComparedComponent() {
-    const statesToCompare = this.stateList.filter((state) => state.selected);
+  openComparedComponent(): void {
+    if (!this.selectedPolygon) {
+      this.dialog.open(ErrorDialogComponent, { width: '250px' });
+      return;
+    }
+    const geom = this.selectedPolygon.getGeometry();
+    if (!(geom instanceof Polygon)) {
+      this.dialog.open(ErrorDialogComponent, { width: '250px' });
+      return;
+    }
+
+    const intersectingFeatures = this.getFeaturesInsidePolygon(geom);
+    const intersectingStates: StateInterface[] = intersectingFeatures
+      .map((feature) => feature.getProperties()?.['ste_code']?.[0])
+      .filter((code): code is string => !!code)
+      .map((code) => this.stateList.find((s) => s.code === code))
+      .filter((s): s is StateInterface => !!s);
+
+    // De-duplicar (por si hay geometrías raras) manteniendo orden estable
+    const seenCodes: Record<string, true> = {};
+    const statesToCompare: StateInterface[] = [];
+    for (const s of intersectingStates) {
+      if (!seenCodes[s.code]) {
+        seenCodes[s.code] = true;
+        statesToCompare.push(s);
+      }
+    }
+
     if (statesToCompare.length > 1) {
       this.comparedStates = true;
       this.statesToCompare = statesToCompare;
     } else {
-      this.dialog.open(ErrorDialogComponent, {
-        width: '250px',
-      });
+      this.dialog.open(ErrorDialogComponent, { width: '250px' });
     }
   }
 

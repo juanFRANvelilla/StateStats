@@ -102,13 +102,25 @@
     </button>
   </div>
 
-  <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon">
-    <button [title]="literals?.usa_map?.delete_polygon" (click)="removeSelectFeature()" class="btn feature-buttons">
+  <div
+    *ngIf="selectedPolygon && polygonActionMenuPosition && !comparedStates"
+    class="polygon-action-menu position-absolute"
+    [style.left.px]="polygonActionMenuPosition.leftPx"
+    [style.top.px]="polygonActionMenuPosition.topPx"
+  >
+    <button
+      [title]="literals?.usa_map?.delete_polygon"
+      (click)="removeSelectFeature()"
+      class="btn feature-buttons feature-buttons-danger"
+    >
       <i class="bi bi-trash"></i>
     </button>
-    <button [title]="literals?.states_list?.compare_button" (click)="openComparedComponent()"
-      class="btn feature-buttons">
-      <i class="bi bi-grid-3x3-gap"></i>
+    <button
+      [title]="literals?.states_list?.compare_button"
+      (click)="openComparedComponent()"
+      class="btn feature-buttons feature-buttons-info"
+    >
+      <i class="bi bi-info-circle"></i>
     </button>
   </div>
 

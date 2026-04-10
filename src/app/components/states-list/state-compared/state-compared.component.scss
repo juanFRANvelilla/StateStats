@@ -26,3 +26,16 @@
   box-sizing: border-box;
   margin: 10px;
 }
+
+.modal-overlay {
+  overflow-y: hidden;
+}
+
+.modal-content {
+  max-height: 90vh;
+  overflow-y: hidden;
+}
+
+.overflow-x-auto {
+  overflow-y: hidden !important;
+}
