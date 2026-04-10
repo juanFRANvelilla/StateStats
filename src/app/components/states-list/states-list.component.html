@@ -68,8 +68,25 @@
     [ngClass]="selectedPolygon ? 'blue-theme' : 'red-theme'">
 
     <div *ngIf="selectedPolygon; else noPolygonSelected">
-        <h4 style="color: black;">{{ literals?.states_list?.polygon_area }}:</h4>
-        <p> {{ getSelectedPolygonArea() }}</p>
+        <h4 class="polygon-area-title">{{ literals?.states_list?.polygon_info_title }}</h4>
+        <div class="polygon-metrics">
+            <p>
+                <strong>{{ literals?.states_list?.polygon_area }}:</strong>
+                <span class="polygon-metric-value">{{ getSelectedPolygonArea() }}</span>
+            </p>
+            <p>
+                <strong>{{ literals?.states_list?.perimeter }}:</strong>
+                <span class="polygon-metric-value">{{ getSelectedPolygonPerimeter() }}</span>
+            </p>
+            <p>
+                <strong>{{ literals?.states_list?.vertices }}:</strong>
+                <span class="polygon-metric-value">{{ getSelectedPolygonVerticesCount() }}</span>
+            </p>
+            <p>
+                <strong>{{ literals?.states_list?.center }}:</strong>
+                <span class="polygon-metric-value">{{ getSelectedPolygonCenter() }}</span>
+            </p>
+        </div>
     </div>
 
     <ng-template #noPolygonSelected>

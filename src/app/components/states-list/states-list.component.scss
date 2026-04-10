@@ -119,11 +119,42 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: fit-content;
-  margin-top: 20px;
-  max-width: 300px;
+  width: 90%;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 40px;
+}
+
+.polygon-area-title {
+  margin: 0 0 10px;
+  font-weight: 700;
+  color: #191919;
+}
+
+.polygon-metrics p {
+  margin: 0 0 6px;
+}
+
+.polygon-metrics strong {
+  color: #191919;
+}
+
+.polygon-metric-value {
+  color: #007bff;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+:host-context(body.app-dark-theme) .polygon-area-container {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+:host-context(body.app-dark-theme) .polygon-area-title,
+:host-context(body.app-dark-theme) .polygon-metrics {
+  color: #ffffff;
+}
+
+:host-context(body.app-dark-theme) .polygon-metrics strong {
+  color: #ffffff;
 }
 
 .blue-theme{

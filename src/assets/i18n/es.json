@@ -25,6 +25,10 @@
         "compare_button": "Comparar",
         "clean_all": "Limpiar todo",
         "polygon_area": "Area del Polígono",
+        "polygon_info_title": "Info del polígono",
+        "perimeter": "Perímetro",
+        "vertices": "Vértices",
+        "center": "Centro",
         "no_polygon_selected": "Ningún polígono seleccionado"
     },
     "state_detail": {

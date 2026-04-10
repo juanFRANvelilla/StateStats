@@ -13,6 +13,9 @@ import { Feature } from 'ol';
 import { Polygon } from 'ol/geom';
 import VectorLayer from 'ol/layer/Vector';
 import { LayerSelected } from '../model/layer-selected';
+import { toLonLat } from 'ol/proj';
+import { getCenter } from 'ol/extent';
+import { getLength as getGeodesicLength } from 'ol/sphere';
 
 
 
@@ -63,6 +66,27 @@ export class StatesListComponent {
     const polygon = this.selectedPolygon?.getGeometry() as Polygon;
     const area = polygon.getArea();
     return `${area.toFixed(2)} m²`;
+  }
+
+  getSelectedPolygonPerimeter(): string {
+    const polygon = this.selectedPolygon?.getGeometry() as Polygon;
+    const ring = polygon.getLinearRing(0);
+    const perimeter = ring ? getGeodesicLength(ring, { projection: 'EPSG:3857' }) : 0;
+    return `${perimeter.toFixed(2)} m`;
+  }
+
+  getSelectedPolygonVerticesCount(): number {
+    const polygon = this.selectedPolygon?.getGeometry() as Polygon;
+    const coords = polygon.getCoordinates()?.[0] ?? [];
+    // El último punto suele repetir el primero para cerrar el anillo
+    return Math.max(0, coords.length - 1);
+  }
+
+  getSelectedPolygonCenter(): string {
+    const polygon = this.selectedPolygon?.getGeometry() as Polygon;
+    const center3857 = getCenter(polygon.getExtent());
+    const [lon, lat] = toLonLat(center3857);
+    return `${lat.toFixed(5)}, ${lon.toFixed(5)}`;
   }
 
   viewDetails(state: any) {

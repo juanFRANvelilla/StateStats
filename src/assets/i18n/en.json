@@ -25,6 +25,10 @@
         "compare_button": "Compare",
         "clean_all": "Clean all",
         "polygon_area": "Polygon Area",
+        "polygon_info_title": "Polygon data",
+        "perimeter": "Perimeter",
+        "vertices": "Vertices",
+        "center": "Center",
         "no_polygon_selected": "Not polygon selected"
     },
     "state_detail": {
