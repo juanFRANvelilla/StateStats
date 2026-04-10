@@ -216,6 +216,28 @@ export class UsaMapComponent {
     this.updatePolygonActionMenuPosition();
   }
 
+  /** Centra la vista en el polígono (p. ej. al hacer click para seleccionarlo). */
+  private fitViewToPolygonFeature(feature: Feature): void {
+    if (!this.map) {
+      return;
+    }
+    const geom = feature.getGeometry();
+    if (!geom) {
+      return;
+    }
+    const extent = geom.getExtent();
+    const size = this.map.getSize();
+    if (!size) {
+      return;
+    }
+    this.map.getView().fit(extent, {
+      size,
+      padding: [50, 50, 50, 50],
+      maxZoom: 13,
+      duration: 350,
+    });
+  }
+
   private updatePolygonActionMenuPosition(): void {
     if (!this.map || !this.selectedPolygon) {
       this.polygonActionMenuPosition = null;
@@ -458,6 +480,7 @@ export class UsaMapComponent {
 
       if (polygonFeature) {
         this.setSelectedFeature(polygonFeature);
+        this.fitViewToPolygonFeature(polygonFeature);
         return;
       }
 
