@@ -161,6 +161,9 @@ export class UsaMapComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mobileLayout']?.currentValue === true && this.tooltipElement) {
+      this.hideTooltip();
+    }
     if (
       changes['mobileLayout']?.currentValue === true &&
       this.dragAndDropInteraction &&
@@ -502,6 +505,10 @@ export class UsaMapComponent implements OnChanges {
 
   private handlePointerMove(event: any) {
     if (!this.disabledActions) {
+      if (this.mobileLayout) {
+        this.hideTooltip();
+        return;
+      }
       const pixel = this.map.getEventPixel(event.originalEvent);
       // Solo capa de estados: la capa de polígonos está encima y ocultaría el estado bajo el cursor.
       const feature = this.map.forEachFeatureAtPixel(

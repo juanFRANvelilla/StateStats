@@ -4,7 +4,7 @@
   [class.app-root--compare-open]="!!compareModalStates"
 >
   <div class="app-states-sidebar" *ngIf="!isMobile">
-    <app-states-list class="app-states-list"></app-states-list>
+    <app-states-list class="app-states-list" [mobileLayout]="isMobile"></app-states-list>
   </div>
 
   <div class="app-map-wrap" [class.app-map-wrap--mobile]="isMobile">
@@ -40,7 +40,7 @@
       </button>
     </div>
     <div class="mobile-sheet-body">
-      <app-states-list class="app-states-list app-states-list--in-sheet"></app-states-list>
+      <app-states-list class="app-states-list app-states-list--in-sheet" [mobileLayout]="isMobile"></app-states-list>
     </div>
   </div>
 

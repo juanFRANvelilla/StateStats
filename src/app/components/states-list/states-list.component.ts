@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UsaStatesService } from '../usa-states.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './states-list.component.scss'
 })
 export class StatesListComponent {
+  /** Desactiva matTooltip en vista móvil (mismo criterio que app MOBILE_BREAKPOINT_PX). */
+  @Input() mobileLayout = false;
+
   stateList: StateInterface[] = [];
   stateSelected?: StateInterface;
   viewMode: ViewMode = ViewMode.LIST_STATES;

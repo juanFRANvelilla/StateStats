@@ -37,43 +37,43 @@
 
   <div class="polygon-tools-stack position-absolute bottom-position ms-2">
     <div class="polygon-buttons">
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="activateDrawPolygon()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawPolygon !== null }">
         <i class="bi bi-hexagon"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.edit_vertices" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.edit_vertices" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="activateModifyTool()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': modifyInteraction !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-arrows-angle-contract"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.move_polygon" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.move_polygon" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="activateTranformTool()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': translateInteraction !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-arrows-move"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.split_polygon" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.split_polygon" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="activateDrawLine()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawLine !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-slash-lg"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.cut_polygon" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.cut_polygon" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="intersectPolygons()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawPolygonCut !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-scissors"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.add_area" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.add_area" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="unionPolygons()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawPolygonUnion !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-intersect"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.extract_area" matTooltipPosition="above">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.extract_area" matTooltipPosition="above" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="intersectContainPolygon()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawPolygonContainCut !== null }" [disabled]="!hasDrwanPolygons()">
         <i class="bi bi-box-arrow-in-down"></i>
@@ -90,12 +90,12 @@
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="openMobilePanelWithViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
         <i class="bi bi-list-ol"></i>
       </button>
     </span>
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.manage_layers" matTooltipPosition="left">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.manage_layers" matTooltipPosition="left" [matTooltipDisabled]="mobileLayout">
       <button type="button" (click)="openMobilePanelWithViewMode(viewMode.LAYERS)" class="btn feature-buttons">
         <i class="bi bi-layers"></i>
       </button>
@@ -103,19 +103,19 @@
   </div>
 
   <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon && !compareModalOpen">
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.delete_polygon" matTooltipPosition="left">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.delete_polygon" matTooltipPosition="left" [matTooltipDisabled]="mobileLayout">
       <button (click)="removeSelectFeature()" class="btn feature-buttons feature-buttons-danger">
         <i class="bi bi-trash"></i>
       </button>
     </span>
 
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.states_list?.compare_states_tooltip" matTooltipPosition="left">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.states_list?.compare_states_tooltip" matTooltipPosition="left" [matTooltipDisabled]="mobileLayout">
       <button (click)="openComparedComponent()" class="btn feature-buttons feature-buttons-info">
         <i class="bi bi-grid-3x3-gap"></i>
       </button>
     </span>
 
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.polygon_info" matTooltipPosition="left">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.polygon_info" matTooltipPosition="left" [matTooltipDisabled]="mobileLayout">
       <button
         type="button"
         (click)="openPolygonInfoPanel()"

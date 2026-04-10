@@ -36,6 +36,7 @@
             class="tool-tooltip-wrap d-inline-flex"
             [matTooltip]="literals?.states_list?.compare_states_tooltip"
             matTooltipPosition="above"
+            [matTooltipDisabled]="mobileLayout"
         >
             <button
                 class="btn btn-primary btn-lg compare-btn"
@@ -49,6 +50,7 @@
             class="tool-tooltip-wrap d-inline-flex"
             [matTooltip]="literals?.states_list?.clean_map_tooltip"
             matTooltipPosition="above"
+            [matTooltipDisabled]="mobileLayout"
         >
             <button
                 type="button"

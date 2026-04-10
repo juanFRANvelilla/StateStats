@@ -138,9 +138,8 @@
 
 /* El listado no debe medir 100vh: solo ocupa el hueco bajo la cabecera del sheet */
 .mobile-sheet-body > app-states-list {
-  background-color: blue;
   flex: 1 1 0;
-  height: 100dvh;
+  height: 100%;
   max-height: 100dvh;
   align-self: stretch;
   overflow: hidden;
