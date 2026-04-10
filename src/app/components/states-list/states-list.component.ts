@@ -20,10 +20,12 @@ import { getLength as getGeodesicLength } from 'ol/sphere';
 
 
 import { LanguageService } from '../../services/language.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 @Component({
   selector: 'app-states-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, StateDetailComponent, StateComparedComponent],
+  imports: [FormsModule, CommonModule, StateDetailComponent, StateComparedComponent, MatTooltipModule],
   templateUrl: './states-list.component.html',
   styleUrl: './states-list.component.scss'
 })

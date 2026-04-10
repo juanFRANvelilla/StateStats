@@ -35,7 +35,15 @@
     </div>
   </div>
 
-  <div class="polygon-buttons position-absolute bottom-position ms-2">
+  <div class="polygon-tools-stack position-absolute bottom-position ms-2">
+    <div *ngIf="mobileLayout && mobileSheetClosed" class="mobile-open-list-row">
+      <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.open_states_list" matTooltipPosition="above">
+        <button type="button" (click)="openMobileStatesPanel()" class="btn feature-buttons feature-buttons-mobile-open-list">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </span>
+    </div>
+    <div class="polygon-buttons">
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above">
       <button type="button" (click)="activateDrawPolygon()" class="btn feature-buttons"
         [ngClass]="{ 'btn-selected': drawPolygon !== null }">
@@ -85,10 +93,11 @@
       </button>
     </span>
 
+    </div>
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
+    <span *ngIf="!mobileLayout" class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
       <button (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
         <i class="bi bi-list-ol"></i>
       </button>

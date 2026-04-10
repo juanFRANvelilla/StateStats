@@ -115,6 +115,16 @@ body.app-dark-theme .app-states-list {
   min-height: 100vh;
 }
 
+/* Panel móvil inferior: no forzar altura de viewport (empuja botones fuera de la vista) */
+body.app-dark-theme .app-states-list.app-states-list--in-sheet {
+  min-height: 0;
+}
+
+body.app-dark-theme .app-states-list.app-states-list--in-sheet .states-list-bottom-actions {
+  background-color: #12141a;
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
 body.app-dark-theme .app-states-list .principal-container {
   background-color: #12141a;
   color: #e8e8ec;

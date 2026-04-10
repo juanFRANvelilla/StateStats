@@ -1,10 +1,140 @@
-.app-states-list {
-  margin: 0px;
+.app-root {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app-states-sidebar {
+  margin: 0;
   flex: 1;
   max-width: 450px;
 }
 
-.app-usa-map{
-  margin: 0px;
-  flex : 1.5;
+.app-map-wrap {
+  margin: 0;
+  flex: 1.5;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-usa-map {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Vista móvil (ancho menor de 500px) */
+.app-root--mobile {
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.app-root--mobile .app-map-wrap--mobile {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-sheet {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #fff;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1100;
+  touch-action: none;
+}
+
+.mobile-sheet--closed {
+  flex: 0 0 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  box-shadow: none;
+}
+
+:host-context(body.app-dark-theme) .mobile-sheet {
+  background: #1a1d23;
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.mobile-sheet-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 8px 12px 10px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.mobile-sheet-header:active {
+  cursor: grabbing;
+}
+
+.mobile-sheet-handle {
+  width: 40px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+:host-context(body.app-dark-theme) .mobile-sheet-handle {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.mobile-sheet-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 4px 10px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.mobile-sheet-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+:host-context(body.app-dark-theme) .mobile-sheet-close {
+  color: #e5e5e5;
+}
+
+:host-context(body.app-dark-theme) .mobile-sheet-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mobile-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  touch-action: pan-y;
+}
+
+/* El listado no debe medir 100vh: solo ocupa el hueco bajo la cabecera del sheet */
+.mobile-sheet-body > app-states-list {
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 100%;
+  align-self: stretch;
+  overflow: hidden;
 }

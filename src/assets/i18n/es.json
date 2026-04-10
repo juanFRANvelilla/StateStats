@@ -14,7 +14,8 @@
         "manage_layers": "Gestionar capas",
         "drag_drop_geojson": "Arrastra un fichero GeoJSON al mapa",
         "delete_polygon": "Eliminar polígono",
-        "polygon_info": "Información del polígono"
+        "polygon_info": "Información del polígono",
+        "open_states_list": "Abrir lista de estados"
     },
     "states_list": {
         "table": {
@@ -26,6 +27,7 @@
         "compare_button": "Comparar",
         "compare_states_tooltip": "Comparar estados",
         "clean_all": "Limpiar todo",
+        "clean_map_tooltip": "Limpiar mapa",
         "polygon_area": "Area del Polígono",
         "polygon_info_title": "Info del polígono",
         "perimeter": "Perímetro",

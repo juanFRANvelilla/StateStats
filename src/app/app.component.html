@@ -1,4 +1,40 @@
-<div class="d-flex">
+<div class="app-root" [class.app-root--mobile]="isMobile">
+  <div class="app-states-sidebar" *ngIf="!isMobile">
     <app-states-list class="app-states-list"></app-states-list>
-    <app-usa-map class="app-usa-map"></app-usa-map>
+  </div>
+
+  <div class="app-map-wrap" [class.app-map-wrap--mobile]="isMobile">
+    <app-usa-map
+      class="app-usa-map"
+      [mobileLayout]="isMobile"
+      [mobileSheetClosed]="mobileSheetClosed"
+      (mobileOpenStatesList)="openMobileSheet()"
+    ></app-usa-map>
+  </div>
+
+  <div
+    *ngIf="isMobile"
+    class="mobile-sheet"
+    [class.mobile-sheet--closed]="sheetHeightPercent <= 0"
+    [class.mobile-sheet--open]="sheetHeightPercent > 0"
+    [style.height.%]="sheetHeightPercent"
+  >
+    <div
+      class="mobile-sheet-header"
+      (pointerdown)="onSheetPointerDown($event)"
+    >
+      <div class="mobile-sheet-handle" aria-hidden="true"></div>
+      <button
+        type="button"
+        class="mobile-sheet-close"
+        (click)="closeMobileSheet(); $event.stopPropagation()"
+        aria-label="Cerrar lista"
+      >
+        ×
+      </button>
+    </div>
+    <div class="mobile-sheet-body">
+      <app-states-list class="app-states-list app-states-list--in-sheet"></app-states-list>
+    </div>
+  </div>
 </div>

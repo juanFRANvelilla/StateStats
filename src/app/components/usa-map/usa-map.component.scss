@@ -63,10 +63,27 @@
   background-color: #f1f1f1;
 }
 
+.polygon-tools-stack {
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .polygon-buttons {
   z-index: 1000;
   display: flex;
   gap: 3px;
+  flex-wrap: wrap;
+}
+
+.feature-buttons-mobile-open-list {
+  background-color: rgba(16, 185, 129, 0.9);
+}
+
+.feature-buttons-mobile-open-list:hover {
+  background-color: rgba(5, 150, 105, 1) !important;
 }
 
 .tool-tooltip-wrap {

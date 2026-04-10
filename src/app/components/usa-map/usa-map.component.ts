@@ -1,5 +1,16 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, ElementRef, HostListener, ViewChild, effect } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  effect,
+} from '@angular/core';
 import { View, Map as OlMap, Feature } from 'ol';
 import { OSM } from 'ol/source';
 import XYZ from 'ol/source/XYZ';
@@ -57,7 +68,13 @@ import { AppPersistenceService } from '../../services/app-persistence.service';
   templateUrl: './usa-map.component.html',
   styleUrl: './usa-map.component.scss',
 })
-export class UsaMapComponent {
+export class UsaMapComponent implements OnChanges {
+  /** Vista solo mapa con panel de lista deslizable (app móvil). */
+  @Input() mobileLayout = false;
+  /** Panel de lista cerrado (muestra flecha para abrir). */
+  @Input() mobileSheetClosed = true;
+  @Output() mobileOpenStatesList = new EventEmitter<void>();
+
   @ViewChild('langSelect', { read: ElementRef })
   private langSelectRef?: ElementRef<HTMLSelectElement>;
 
@@ -129,6 +146,22 @@ export class UsaMapComponent {
 
   changeLanguage(lang: string) {
     this.languageService.changeLanguage(lang);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      (changes['mobileLayout'] || changes['mobileSheetClosed']) &&
+      this.map
+    ) {
+      setTimeout(() => {
+        this.map?.updateSize();
+        this.map?.renderSync();
+      }, 0);
+    }
+  }
+
+  openMobileStatesPanel(): void {
+    this.mobileOpenStatesList.emit();
   }
 
   ngOnInit(): void {

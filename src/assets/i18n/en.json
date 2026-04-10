@@ -14,7 +14,8 @@
         "manage_layers": "Manage layers",
         "drag_drop_geojson": "Drag a GeoJSON file to the map",
         "delete_polygon": "Delete polygon",
-        "polygon_info": "Polygon info"
+        "polygon_info": "Polygon info",
+        "open_states_list": "Open state list"
     },
     "states_list": {
         "table": {
@@ -26,6 +27,7 @@
         "compare_button": "Compare",
         "compare_states_tooltip": "Compare states",
         "clean_all": "Clean all",
+        "clean_map_tooltip": "Clear map",
         "polygon_area": "Polygon Area",
         "polygon_info_title": "Polygon data",
         "perimeter": "Perimeter",
