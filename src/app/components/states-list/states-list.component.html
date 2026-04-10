@@ -32,7 +32,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-between align-items-center mt-1 p-1">
-        <button class="btn btn-primary btn-lg" (click)="openComparedComponent()" [disabled]="isCompareDisabled()">
+        <button class="btn btn-primary btn-lg compare-btn" (click)="openComparedComponent()" [disabled]="isCompareDisabled()">
             {{ literals?.states_list?.compare_button }}
         </button>
         <button class="btn btn-warning btn-lg" [ngStyle]="{'margin-right': '28px'}" [title]="literals?.states_list?.clean_all" (click)="cleanAll()">
