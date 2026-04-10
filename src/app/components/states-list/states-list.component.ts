@@ -55,6 +55,9 @@ export class StatesListComponent {
 
     this.usaStatesService.getSelectedPolygon().subscribe((selectedPolygon: Feature | null) => {
       this.selectedPolygon = selectedPolygon;
+      if (!selectedPolygon && this.viewMode === ViewMode.POLYGON_AREA) {
+        this.usaStatesService.setViewMode(ViewMode.LIST_STATES);
+      }
     });
 
     this.usaStatesService.getMapLayers().subscribe((mapLayers: LayerSelected[]) => {
@@ -91,6 +94,10 @@ export class StatesListComponent {
 
   viewDetails(state: any) {
     this.stateSelected = state;
+  }
+
+  closePolygonInfo(): void {
+    this.usaStatesService.setViewMode(ViewMode.LIST_STATES);
   }
 
   isCompareDisabled(): boolean {

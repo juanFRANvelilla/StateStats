@@ -130,6 +130,30 @@
   color: #191919;
 }
 
+.polygon-area-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.polygon-area-close {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  line-height: 1;
+  font-size: 1.6rem;
+  color: #191919;
+  cursor: pointer;
+  opacity: 0.85;
+  position: relative;
+  top: -4px;
+}
+
+.polygon-area-close:hover {
+  opacity: 1;
+}
+
 .polygon-metrics p {
   margin: 0 0 6px;
 }
@@ -150,6 +174,10 @@
 
 :host-context(body.app-dark-theme) .polygon-area-title,
 :host-context(body.app-dark-theme) .polygon-metrics {
+  color: #ffffff;
+}
+
+:host-context(body.app-dark-theme) .polygon-area-close {
   color: #ffffff;
 }
 

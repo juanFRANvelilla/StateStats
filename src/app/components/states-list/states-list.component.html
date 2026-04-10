@@ -67,8 +67,13 @@
 <div *ngIf="viewMode == ViewMode.POLYGON_AREA" class="polygon-area-container"
     [ngClass]="selectedPolygon ? 'blue-theme' : 'red-theme'">
 
-    <div *ngIf="selectedPolygon; else noPolygonSelected">
-        <h4 class="polygon-area-title">{{ literals?.states_list?.polygon_info_title }}</h4>
+    <div *ngIf="selectedPolygon">
+        <div class="polygon-area-header">
+            <h4 class="polygon-area-title">{{ literals?.states_list?.polygon_info_title }}</h4>
+            <button type="button" class="polygon-area-close" (click)="closePolygonInfo()" aria-label="Close">
+                ×
+            </button>
+        </div>
         <div class="polygon-metrics">
             <p>
                 <strong>{{ literals?.states_list?.polygon_area }}:</strong>
@@ -88,12 +93,6 @@
             </p>
         </div>
     </div>
-
-    <ng-template #noPolygonSelected>
-        <div>
-            <p>{{ literals?.states_list?.no_polygon_selected }}</p>
-        </div>
-    </ng-template>
 </div>
 
 
