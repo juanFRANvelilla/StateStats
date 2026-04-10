@@ -42,6 +42,7 @@ import { ViewMode } from '../model/view-mode';
 import { LayerSelected } from '../model/layer-selected';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ThemeService } from '../../services/theme.service';
+import { AppPersistenceService } from '../../services/app-persistence.service';
 
 @Component({
   selector: 'app-usa-map',
@@ -94,6 +95,7 @@ export class UsaMapComponent {
 
   private initialCenter: [number, number] | null = null;
   private initialZoom: number | null = null;
+  private mapViewSaveTimer: ReturnType<typeof setTimeout> | undefined;
 
   dragAndDropInteraction: DragAndDrop | null = null;;
   link!: HTMLAnchorElement;
@@ -104,7 +106,8 @@ export class UsaMapComponent {
     private usaStatesService: UsaStatesService,
     public dialog: MatDialog,
     public languageService: LanguageService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private appPersistence: AppPersistenceService
   ) {
     effect(() => {
       this.themeService.isDark();
@@ -177,6 +180,7 @@ export class UsaMapComponent {
           }
         });
         this.usaStatesService.setStateList(this.stateList);
+        this.usaStatesService.applyPersistedSelection();
       });
     });
 
@@ -193,6 +197,7 @@ export class UsaMapComponent {
     this.usaStatesService.getCleanAll().subscribe(() => {
       if (this.polygonVectorSource) {
         this.polygonVectorSource.clear();
+        this.persistPolygons();
       }
       this.selectedPolygon = null;
       if (this.initialCenter && this.initialZoom !== null) {
@@ -264,6 +269,44 @@ export class UsaMapComponent {
     this.usaStatesService.manageMapLayer(true, statesVectorLayer);
     this.map.addLayer(this.polygonVectorLayer);
     this.usaStatesService.manageMapLayer(true, this.polygonVectorLayer);
+
+    this.restorePersistedPolygons();
+    this.polygonVectorSource.on('addfeature', () => this.persistPolygons());
+    this.polygonVectorSource.on('removefeature', () => this.persistPolygons());
+    this.polygonVectorSource.on('changefeature', () => this.persistPolygons());
+  }
+
+  private persistPolygons(): void {
+    if (!this.polygonVectorSource) {
+      return;
+    }
+    const format = new GeoJSON();
+    const geojson = format.writeFeaturesObject(this.polygonVectorSource.getFeatures(), {
+      featureProjection: 'EPSG:3857',
+    });
+    this.appPersistence.setPolygonsGeoJSON(JSON.stringify(geojson));
+  }
+
+  private restorePersistedPolygons(): void {
+    const raw = this.appPersistence.getPolygonsGeoJSON();
+    if (!raw || !this.polygonVectorSource) {
+      return;
+    }
+    try {
+      const geojson = JSON.parse(raw);
+      if (!geojson?.features?.length) {
+        return;
+      }
+      const format = new GeoJSON();
+      const features = format.readFeatures(geojson, {
+        featureProjection: 'EPSG:3857',
+      }) as Feature[];
+      features.forEach((f) => f.setStyle(undefined));
+      this.polygonVectorSource.addFeatures(features);
+      this.polygonVectorLayer?.changed();
+    } catch {
+      this.appPersistence.setPolygonsGeoJSON('');
+    }
   }
 
   filterStates(): void {
@@ -303,9 +346,50 @@ export class UsaMapComponent {
 
     this.map.on('pointermove', (event) => this.handlePointerMove(event));
     this.map.on('singleclick', (event) => this.handleMapClick(event));
-    this.map.on('moveend', () => this.updatePolygonActionMenuPosition());
+    this.map.on('moveend', () => {
+      this.updatePolygonActionMenuPosition();
+      this.schedulePersistMapView();
+    });
 
     this.syncBaseLayerFromTheme();
+    this.restoreMapView();
+  }
+
+  private schedulePersistMapView(): void {
+    if (this.mapViewSaveTimer) {
+      clearTimeout(this.mapViewSaveTimer);
+    }
+    this.mapViewSaveTimer = setTimeout(() => this.persistMapView(), 250);
+  }
+
+  private persistMapView(): void {
+    if (!this.map) {
+      return;
+    }
+    const view = this.map.getView();
+    const size = this.map.getSize();
+    const center = view.getCenter();
+    const zoom = view.getZoom();
+    if (!size || !center || zoom == null) {
+      return;
+    }
+    const extent = view.calculateExtent(size);
+    this.appPersistence.setMapView({
+      center: [center[0], center[1]],
+      extent: extent as [number, number, number, number],
+      zoom,
+    });
+  }
+
+  private restoreMapView(): void {
+    const saved = this.appPersistence.getMapView();
+    if (!saved || !this.map) {
+      return;
+    }
+    const view = this.map.getView();
+    view.setCenter(saved.center);
+    view.setZoom(saved.zoom);
+    this.map.updateSize();
   }
 
   /** Capa base OSM en modo claro, Carto Dark en modo oscuro (ThemeService). */

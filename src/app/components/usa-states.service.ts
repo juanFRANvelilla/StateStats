@@ -6,6 +6,7 @@ import { ViewMode } from './model/view-mode';
 import { Feature } from 'ol';
 import VectorLayer from 'ol/layer/Vector';
 import { LayerSelected } from './model/layer-selected';
+import { AppPersistenceService } from '../services/app-persistence.service';
 
 
 @Injectable({
@@ -18,7 +19,15 @@ export class UsaStatesService {
   private mapLayers = new BehaviorSubject<LayerSelected[]>([]);
   private cleanAllSubject = new BehaviorSubject<void | null>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private persistence: AppPersistenceService
+  ) {
+    const savedView = this.persistence.getViewMode();
+    if (savedView) {
+      this.viewMode.next(savedView);
+    }
+  }
 
   getSelectedPolygon(): Observable<Feature | null> {
     return this.selectedPolygon.asObservable();
@@ -34,6 +43,7 @@ export class UsaStatesService {
 
   setViewMode(viewMode: ViewMode) {
     this.viewMode.next(viewMode);
+    this.persistence.setViewMode(viewMode);
   }
 
   addLayerSelected(newLayerSelected: LayerSelected): void {
@@ -79,6 +89,25 @@ export class UsaStatesService {
 
     const newStateList = active ? [stateChanged, ...selectedState, ...unselectedStates] : [...selectedState, ...unselectedStates];
     this.setStateList(newStateList);
+    this.persistSelectedCodes();
+  }
+
+  private persistSelectedCodes(): void {
+    const codes = this.stateList.value.filter((s) => s.selected).map((s) => s.code);
+    this.persistence.setSelectedStateCodes(codes);
+  }
+
+  /** Restaura selección desde localStorage tras cargar el listado de estados (censo). */
+  applyPersistedSelection(): void {
+    const codes = new Set(this.persistence.getSelectedStateCodes());
+    if (codes.size === 0 || this.stateList.value.length === 0) {
+      return;
+    }
+    const list = this.stateList.value.map((s) => ({ ...s, selected: codes.has(s.code) }));
+    const selected = list.filter((s) => s.selected);
+    const unselected = list.filter((s) => !s.selected);
+    this.setStateList([...selected, ...unselected]);
+    this.persistSelectedCodes();
   }
 
   getStates(): Observable<any> {
@@ -97,6 +126,7 @@ export class UsaStatesService {
   triggerCleanAll() {
     const updatedStateList = this.stateList.value.map(state => ({ ...state, selected: false }));
     this.setStateList(updatedStateList);
+    this.persistence.clearSessionState();
     this.setSelectedPolygon(null);
     this.cleanAllSubject.next();
   }
