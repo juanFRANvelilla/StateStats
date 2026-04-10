@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StateInterface } from '../model/state-interface';
 import { StateDetailComponent } from './state-detail/state-detail.component';
-import { StateComparedComponent } from './state-compared/state-compared.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ViewMode } from '../model/view-mode';
@@ -20,27 +19,31 @@ import { getLength as getGeodesicLength } from 'ol/sphere';
 
 
 import { LanguageService } from '../../services/language.service';
+import { CompareModalService } from '../../services/compare-modal.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-states-list',
   standalone: true,
-  imports: [FormsModule, CommonModule, StateDetailComponent, StateComparedComponent, MatTooltipModule],
+  imports: [FormsModule, CommonModule, StateDetailComponent, MatTooltipModule],
   templateUrl: './states-list.component.html',
   styleUrl: './states-list.component.scss'
 })
 export class StatesListComponent {
   stateList: StateInterface[] = [];
   stateSelected?: StateInterface;
-  comparedStates: boolean = false;
-  statesToCompare: StateInterface[] = [];
   viewMode: ViewMode = ViewMode.LIST_STATES;
   ViewMode = ViewMode;
   selectedPolygon: Feature | null = null;
   mapLayers: LayerSelected[] = [];
   literals: any = {};
 
-  constructor(private usaStatesService: UsaStatesService, public dialog: MatDialog, public languageService: LanguageService) { }
+  constructor(
+    private usaStatesService: UsaStatesService,
+    public dialog: MatDialog,
+    public languageService: LanguageService,
+    private compareModalService: CompareModalService,
+  ) {}
 
   ngOnInit(): void {
     this.languageService.literals$.subscribe((literals) => {
@@ -108,7 +111,6 @@ export class StatesListComponent {
 
   closeModal() {
     this.stateSelected = undefined;
-    this.comparedStates = false;
   }
 
   onSelectedChange(stateSelected: StateInterface) {
@@ -131,13 +133,12 @@ export class StatesListComponent {
   }
 
   openComparedComponent() {
-    const statesToCompare = this.stateList.filter(state => state.selected);
+    const statesToCompare = this.stateList.filter((state) => state.selected);
     if (statesToCompare.length > 1) {
-      this.comparedStates = true;
-      this.statesToCompare = statesToCompare;
+      this.compareModalService.open(statesToCompare);
     } else {
       this.dialog.open(ErrorDialogComponent, {
-        width: '250px'
+        width: '250px',
       });
     }
   }

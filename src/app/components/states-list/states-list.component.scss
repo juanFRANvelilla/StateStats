@@ -351,3 +351,8 @@
     pointer-events: none;
   }
 }
+
+/* Detalle / comparar desde el listado en el sheet: encima del panel swipe */
+:host-context(.app-root--mobile) > .modal-overlay {
+  z-index: 1200;
+}

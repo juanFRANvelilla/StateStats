@@ -130,6 +130,11 @@
   touch-action: pan-y;
 }
 
+/* Modales fixed (detalle / comparar) dentro del sheet: no recortar por overflow */
+.app-root--mobile .mobile-sheet-body {
+  overflow: visible;
+}
+
 /* El listado no debe medir 100vh: solo ocupa el hueco bajo la cabecera del sheet */
 .mobile-sheet-body > app-states-list {
   flex: 1 1 0;
@@ -137,4 +142,16 @@
   max-height: 100%;
   align-self: stretch;
   overflow: hidden;
+}
+
+/* Modal comparar en raíz: por encima del sheet (1100); overflow visible para no recortar fixed */
+.app-compare-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  pointer-events: auto;
+}
+
+.app-root--mobile.app-root--compare-open {
+  overflow: visible;
 }

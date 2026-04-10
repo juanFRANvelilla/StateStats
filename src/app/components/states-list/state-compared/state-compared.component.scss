@@ -44,3 +44,63 @@
   width: max-content;
   max-width: 90vw;
 }
+
+/* Alineado con app.component.ts MOBILE_BREAKPOINT_PX (viewport < 600px) */
+@media (max-width: 599.98px) {
+  :host {
+    display: block;
+    min-height: 0;
+  }
+
+  /* Un solo scroll: desde el título hasta el final (sin min-height que recorte arriba) */
+  :host .modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+    max-height: none;
+    z-index: 1;
+    padding: 0;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  :host .modal-content {
+    width: 100% !important;
+    max-width: 100%;
+    min-height: unset;
+    border-radius: 0;
+    margin: 0;
+    max-height: none;
+    overflow-x: visible;
+    overflow-y: visible;
+    box-sizing: border-box;
+    padding-bottom: 1.5rem;
+  }
+
+  :host .overflow-x-auto {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-direction: column;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  :host .flex-item {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 12px;
+  }
+
+  :host .flex-item:last-child {
+    margin-bottom: 0;
+  }
+}

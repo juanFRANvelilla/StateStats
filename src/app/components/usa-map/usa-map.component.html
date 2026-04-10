@@ -105,7 +105,7 @@
     </span>
   </div>
 
-  <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon && !comparedStates">
+  <div class="polygon-buttons position-absolute top-position" *ngIf="selectedPolygon && !compareModalOpen">
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.delete_polygon" matTooltipPosition="left">
       <button (click)="removeSelectFeature()" class="btn feature-buttons feature-buttons-danger">
         <i class="bi bi-trash"></i>
@@ -136,9 +136,6 @@
 
 </div>
 
-<div *ngIf="comparedStates" class="modal-overlay">
-  <app-state-compared [states]="statesToCompare" (close)="closeModal()"></app-state-compared>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsts/2.6.1/jsts.js"></script>
 
 

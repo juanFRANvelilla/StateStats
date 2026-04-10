@@ -1,4 +1,8 @@
-<div class="app-root" [class.app-root--mobile]="isMobile">
+<div
+  class="app-root"
+  [class.app-root--mobile]="isMobile"
+  [class.app-root--compare-open]="!!compareModalStates"
+>
   <div class="app-states-sidebar" *ngIf="!isMobile">
     <app-states-list class="app-states-list"></app-states-list>
   </div>
@@ -38,5 +42,9 @@
     <div class="mobile-sheet-body">
       <app-states-list class="app-states-list app-states-list--in-sheet"></app-states-list>
     </div>
+  </div>
+
+  <div class="app-compare-modal-layer" *ngIf="compareModalStates as cmpStates">
+    <app-state-compared [states]="cmpStates" (close)="closeCompareModal()"></app-state-compared>
   </div>
 </div>

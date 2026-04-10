@@ -120,7 +120,3 @@
 <div *ngIf="stateSelected" class="modal-overlay">
     <app-state-detail *ngIf="stateSelected" [state]="stateSelected" (close)="closeModal()"></app-state-detail>
 </div>
-
-<div *ngIf="comparedStates" class="modal-overlay">
-    <app-state-compared [states]="statesToCompare" (close)="closeModal()"></app-state-compared>
-</div>

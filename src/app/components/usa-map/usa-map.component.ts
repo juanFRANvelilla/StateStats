@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import {
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -10,7 +11,9 @@ import {
   SimpleChanges,
   ViewChild,
   effect,
+  inject,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { View, Map as OlMap, Feature } from 'ol';
 import { OSM } from 'ol/source';
 import XYZ from 'ol/source/XYZ';
@@ -26,7 +29,7 @@ import { FormsModule } from '@angular/forms';
 import { defaults as defaultControls } from 'ol/control';
 import { CommonModule } from '@angular/common';
 import { fromLonLat, toLonLat } from 'ol/proj';
-import { StateComparedComponent } from '../states-list/state-compared/state-compared.component';
+import { CompareModalService } from '../../services/compare-modal.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../states-list/error-dialog/error-dialog.component';
 import { Modify, Translate } from 'ol/interaction';
@@ -62,7 +65,6 @@ import { AppPersistenceService } from '../../services/app-persistence.service';
     HttpClientModule,
     FormsModule,
     CommonModule,
-    StateComparedComponent,
     MatTooltipModule,
   ],
   templateUrl: './usa-map.component.html',
@@ -106,8 +108,8 @@ export class UsaMapComponent implements OnChanges {
   modifyInteraction: Modify | null = null;
   translateInteraction: Translate | null = null;
 
-  comparedStates: boolean = false;
-  statesToCompare: StateInterface[] = [];
+  /** Sincronizado con CompareModalService (ocultar toolbar de polígono mientras el modal está abierto). */
+  compareModalOpen = false;
 
   polygonActionMenuPosition: { leftPx: number; topPx: number } | null = null;
   currentViewMode: ViewMode = ViewMode.LIST_STATES;
@@ -121,6 +123,9 @@ export class UsaMapComponent implements OnChanges {
 
   viewMode = ViewMode;
 
+  private readonly compareModalService = inject(CompareModalService);
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private usaStatesService: UsaStatesService,
     public dialog: MatDialog,
@@ -128,6 +133,11 @@ export class UsaMapComponent implements OnChanges {
     public themeService: ThemeService,
     private appPersistence: AppPersistenceService
   ) {
+    this.compareModalService.states$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((states) => {
+        this.compareModalOpen = !!states?.length;
+      });
     effect(() => {
       this.themeService.isDark();
       this.syncBaseLayerFromTheme();
@@ -1249,15 +1259,10 @@ export class UsaMapComponent implements OnChanges {
     }
 
     if (statesToCompare.length > 1) {
-      this.comparedStates = true;
-      this.statesToCompare = statesToCompare;
+      this.compareModalService.open(statesToCompare);
     } else {
       this.dialog.open(ErrorDialogComponent, { width: '250px' });
     }
-  }
-
-  closeModal() {
-    this.comparedStates = false;
   }
 
   changeViewMode(viewMode: ViewMode) {

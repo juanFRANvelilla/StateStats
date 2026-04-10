@@ -1,25 +1,32 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostListener, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UsaMapComponent } from './components/usa-map/usa-map.component';
 import { StatesListComponent } from './components/states-list/states-list.component';
+import { StateComparedComponent } from './components/states-list/state-compared/state-compared.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from './services/theme.service';
+import { CompareModalService } from './services/compare-modal.service';
+import { StateInterface } from './components/model/state-interface';
 
-const MOBILE_BREAKPOINT_PX = 500;
+const MOBILE_BREAKPOINT_PX = 600;
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [UsaMapComponent, StatesListComponent, HttpClientModule, CommonModule],
+  imports: [UsaMapComponent, StatesListComponent, StateComparedComponent, HttpClientModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'demo-open-layers';
 
-  private readonly _theme = inject(ThemeService);
+  private readonly _compareModal = inject(CompareModalService);
+  private readonly _destroyRef = inject(DestroyRef);
 
-  /** Vista móvil (ancho bajo 500px): mapa a pantalla completa y lista en panel inferior. */
+  /** Estados del modal de comparación (null = cerrado). Render en raíz, encima del panel móvil. */
+  compareModalStates: StateInterface[] | null = null;
+
+  /** Vista móvil: mapa a pantalla completa y lista en panel inferior (ver MOBILE_BREAKPOINT_PX). */
   isMobile = false;
   /** Altura del panel inferior como % del viewport (0 = cerrado). */
   sheetHeightPercent = 0;
@@ -30,6 +37,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateMobileLayout();
+    this._compareModal.states$
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((states) => {
+        this.compareModalStates = states;
+      });
+  }
+
+  closeCompareModal(): void {
+    this._compareModal.close();
   }
 
   @HostListener('window:resize')
