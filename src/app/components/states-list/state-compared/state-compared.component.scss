@@ -69,6 +69,12 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    /* Sustituye el rgba(0,0,0,0.1) global: fondo opaco para no ver el mapa al hacer scroll */
+    background-color: #ffffff !important;
+  }
+
+  :host-context(body.app-dark-theme) .modal-overlay {
+    background-color: #1a1d23 !important;
   }
 
   :host .modal-content {
@@ -82,6 +88,11 @@
     overflow-y: visible;
     box-sizing: border-box;
     padding-bottom: 1.5rem;
+    background-color: #ffffff !important;
+  }
+
+  :host-context(body.app-dark-theme) .modal-content {
+    background-color: #1e222b !important;
   }
 
   :host .overflow-x-auto {

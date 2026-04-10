@@ -150,6 +150,11 @@
   inset: 0;
   z-index: 1300;
   pointer-events: auto;
+  background-color: #ffffff;
+}
+
+:host-context(body.app-dark-theme) .app-compare-modal-layer {
+  background-color: #1a1d23;
 }
 
 .app-root--mobile.app-root--compare-open {
