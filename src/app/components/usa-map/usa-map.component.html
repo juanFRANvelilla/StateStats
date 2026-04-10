@@ -35,10 +35,7 @@
     </div>
   </div>
 
-  <div
-    class="polygon-tools-stack position-absolute bottom-position"
-    [class.ms-2]="!mobileLayout"
-  >
+  <div class="polygon-tools-stack position-absolute bottom-position ms-2">
     <div class="polygon-buttons">
     <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.draw_polygon" matTooltipPosition="above">
       <button type="button" (click)="activateDrawPolygon()" class="btn feature-buttons"

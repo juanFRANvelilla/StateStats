@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CompareModalService } from './services/compare-modal.service';
 import { StateInterface } from './components/model/state-interface';
 
-const MOBILE_BREAKPOINT_PX = 600;
+const MOBILE_BREAKPOINT_PX = 800;
 
 @Component({
   selector: 'app-root',
