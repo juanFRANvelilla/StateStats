@@ -401,6 +401,46 @@ export class UsaMapComponent implements OnChanges {
     this.usaStatesService.selectState(state, active);
   }
 
+  /** Desde el desplegable de búsqueda: selecciona, encuadra el estado y limpia el campo. */
+  selectStateFromSearch(state: StateInterface): void {
+    const active = !state.selected;
+    this.usaStatesService.selectState(state, active);
+    this.searchTerm = '';
+    this.filteredStateList = [];
+    const feature = this.findStateFeatureByCode(state.code);
+    if (feature) {
+      this.fitViewToStateFeature(feature);
+    }
+  }
+
+  private findStateFeatureByCode(stateFips: string): Feature | undefined {
+    return this.statesFeatures.find(
+      (f) => f.getProperties()?.['ste_code']?.[0] === stateFips
+    );
+  }
+
+  /** Zoom suave centrado en la geometría del estado (menos agresivo que un polígono dibujado). */
+  private fitViewToStateFeature(feature: Feature): void {
+    if (!this.map) {
+      return;
+    }
+    const geom = feature.getGeometry();
+    if (!geom) {
+      return;
+    }
+    const extent = geom.getExtent();
+    const size = this.map.getSize();
+    if (!size) {
+      return;
+    }
+    this.map.getView().fit(extent, {
+      size,
+      padding: [100, 100, 100, 100],
+      maxZoom: 5.5,
+      duration: 380,
+    });
+  }
+
   private initializeMap(): void {
     const osmLayer = new TileLayer({
       source: new OSM({

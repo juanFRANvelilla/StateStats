@@ -31,7 +31,7 @@
 
   <div *ngIf="filteredStateList.length > 0" class="filtered-list-container position-absolute">
     <div *ngFor="let state of filteredStateList">
-      <p (click)="selectState(state, !state.selected)">{{ state.name }}</p>
+      <p (click)="selectStateFromSearch(state)">{{ state.name }}</p>
     </div>
   </div>
 
