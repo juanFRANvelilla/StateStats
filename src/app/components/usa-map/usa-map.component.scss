@@ -1,8 +1,7 @@
 :host {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 0;
+  max-height: 100dvh;
 }
 
 :host .position-relative {
@@ -127,6 +126,7 @@
 /* Escritorio / sidebar: margen respecto al borde inferior del área del mapa */
 .bottom-position {
   bottom: 48px;
+  bottom: .5rem;
 }
 
 /* Móvil: pegado al borde del mapa (encima del panel swipe); no afecta a pantalla completa con sidebar */
