@@ -100,11 +100,40 @@
 }
 
 .feature-buttons-mobile-open-list {
-  background-color: rgba(16, 185, 129, 0.9);
+  background-color: #ffffff !important;
+  color: #0d6efd !important;
+  border: 2px solid rgba(13, 110, 253, 0.35) !important;
+  border-radius: 12px;
+  font-size: 1.55rem;
+  padding: 0.45rem 0.5rem;
+  min-width: 3rem;
+  min-height: 3rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.feature-buttons-mobile-open-list i {
+  color: #0d6efd;
 }
 
 .feature-buttons-mobile-open-list:hover {
-  background-color: rgba(5, 150, 105, 1) !important;
+  background-color: #f0f7ff !important;
+  color: #0a58ca !important;
+  transform: scale(1.03);
+}
+
+.feature-buttons-mobile-open-list:hover i {
+  color: #0a58ca;
+}
+
+:host(.usa-map--mobile) .polygon-tools-stack {
+  margin-left: 0 !important;
+  margin-inline-start: 0 !important;
+  left: 0;
+}
+
+:host(.usa-map--mobile) .mobile-open-list-row {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .tool-tooltip-wrap {

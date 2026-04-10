@@ -1268,6 +1268,14 @@ export class UsaMapComponent implements OnChanges {
     this.usaStatesService.setViewMode(viewMode);
   }
 
+  /** Lista de estados: en móvil, si el panel está cerrado, abrirlo al elegir esta vista. */
+  onListStatesOrOpenSheet(): void {
+    if (this.mobileLayout && this.mobileSheetClosed) {
+      this.mobileOpenStatesList.emit();
+    }
+    this.changeViewMode(ViewMode.LIST_STATES);
+  }
+
   existLayerName(name: string): boolean {
     const layers = this.map.getLayers().getArray();
     const layerFiltered = layers.find(layer => layer.get('name') === name);

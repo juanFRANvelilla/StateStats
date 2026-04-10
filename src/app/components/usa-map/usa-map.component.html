@@ -35,7 +35,10 @@
     </div>
   </div>
 
-  <div class="polygon-tools-stack position-absolute bottom-position ms-2">
+  <div
+    class="polygon-tools-stack position-absolute bottom-position"
+    [class.ms-2]="!mobileLayout"
+  >
     <div *ngIf="mobileLayout && mobileSheetClosed" class="mobile-open-list-row">
       <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.open_states_list" matTooltipPosition="above">
         <button type="button" (click)="openMobileStatesPanel()" class="btn feature-buttons feature-buttons-mobile-open-list">
@@ -97,8 +100,8 @@
   </div>
 
   <div class="modeView-buttons position-absolute bottom-position end-0 me-1">
-    <span *ngIf="!mobileLayout" class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
-      <button (click)="changeViewMode(viewMode.LIST_STATES)" class="btn feature-buttons">
+    <span class="tool-tooltip-wrap" [matTooltip]="literals?.usa_map?.list_states" matTooltipPosition="left">
+      <button (click)="onListStatesOrOpenSheet()" class="btn feature-buttons">
         <i class="bi bi-list-ol"></i>
       </button>
     </span>
