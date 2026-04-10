@@ -22,7 +22,7 @@
 
 .flex-item {
   flex: 1 1 45%;
-  min-width: 250px;
+  min-width: 330px;
   box-sizing: border-box;
   margin: 10px;
 }
@@ -32,10 +32,14 @@
 }
 
 .modal-content {
+  width: fit-content;
+  max-width: 90vw;
   max-height: 90vh;
   overflow-y: hidden;
 }
 
 .overflow-x-auto {
   overflow-y: hidden !important;
+  width: max-content;
+  max-width: 90vw;
 }
