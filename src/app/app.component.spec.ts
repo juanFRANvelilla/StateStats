@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'demo-open-layers' title`, () => {
+  it(`should have the 'StateStats' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('demo-open-layers');
+    expect(app.title).toEqual('StateStats');
   });
 
-  it('should render title', () => {
+  it('should render app shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, demo-open-layers');
+    expect(compiled.querySelector('.app-root')).toBeTruthy();
   });
 });

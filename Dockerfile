@@ -1,32 +1,26 @@
-# Etapa 1: Construcción de la aplicación Node.js
+# Etapa 1: Construcción de la aplicación Angular
 FROM cgr.dev/chainguard/node:latest AS build
-
-# ENV NODE_ENV=production
-ENV NODE_ENV=development
-
-
-# Copiar los archivos del proyecto
-COPY --chown=node:node ["./", "/app/"]
 
 WORKDIR /app
 
-# Instalar las dependencias de producción
-RUN npm install
+# Copiar solo los archivos de dependencias primero (para aprovechar el caché de Docker)
+COPY --chown=node:node package.json package-lock.json ./
 
-USER root
-RUN npm install -g @angular/cli
-USER node
+# Instalar las dependencias (incluye devDependencies para el build)
+RUN npm ci
 
-# Construir la aplicación Angular
+# Copiar el resto de los archivos del proyecto
+COPY --chown=node:node . .
+
+# Construir la aplicación Angular para producción
 RUN npm run build
-
-# RUN npx ng build
 
 # Etapa 2: Configuración de Nginx
 FROM cgr.dev/chainguard/nginx:latest
 
-COPY --from=build /app/dist/demo-open-layers/browser /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 8080
+# Salida del build de Angular (application builder → dist/<project>/browser)
+COPY --from=build /app/dist/state-stats/browser /usr/share/nginx/html
 
+EXPOSE 8080

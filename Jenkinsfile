@@ -7,7 +7,7 @@ pipeline {
     }
     environment {
         REGISTRY_URL = "harbor.server.local"
-        IMAGE_NAME = "danielbeltejar/demo-open-layers"
+        IMAGE_NAME = "danielbeltejar/state-stats"
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
     stages {

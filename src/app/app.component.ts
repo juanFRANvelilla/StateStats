@@ -18,7 +18,7 @@ const MOBILE_BREAKPOINT_PX = 800;
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'demo-open-layers';
+  title = 'StateStats';
 
   private readonly _compareModal = inject(CompareModalService);
   private readonly _destroyRef = inject(DestroyRef);

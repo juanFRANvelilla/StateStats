@@ -1,0 +1,43 @@
+# Entorno pre / desarrollo — ajusta namespace, registry e ingress a tu cluster
+namespace: pre-jf-state-stats-front
+replicaCount: 1
+# Imagen: {{ registry }}/state-stats:{{ appVersion }} → alinear tag con Jenkins/Kaniko
+registry: harbor.server.local/danielbeltejar
+image:
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+extraEnv:
+  - name: "TZ"
+    value: "UTC"
+extraEnvFrom: []
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: 100m
+  limits:
+    cpu: 500m
+    memory: "256Mi"
+volumes:
+  - name: tmpfs-var-lib-nginx-tmp
+    emptyDir:
+      medium: Memory
+  - name: tmpfs-run-nginx
+    emptyDir:
+      medium: Memory
+volumeMounts:
+  - name: tmpfs-var-lib-nginx-tmp
+    mountPath: /var/lib/nginx/tmp
+  - name: tmpfs-run-nginx
+    mountPath: /run/nginx
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-set-header: X-Real-IP $remote_addr
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-ovh
+  class: "nginx-local"
+  host: "state-stats.pre.danielbeltejar.es"
+  tls: true

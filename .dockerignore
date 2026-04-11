@@ -3,9 +3,7 @@
 **/dist/
 **/build/
 
-# Dependency & lock files (optional to rebuild inside the container)
 npm-debug.log
-package-lock.json
 yarn.lock
 
 # Git and version control

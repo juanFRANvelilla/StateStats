@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "demo-open-layers": {
+    "state-stats": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo-open-layers",
+            "outputPath": "dist/state-stats",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "demo-open-layers:build:production"
+              "buildTarget": "state-stats:build:production"
             },
             "development": {
-              "buildTarget": "demo-open-layers:build:development"
+              "buildTarget": "state-stats:build:development"
             }
           },
           "defaultConfiguration": "development"

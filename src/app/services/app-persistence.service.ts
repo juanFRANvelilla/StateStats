@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ViewMode } from '../components/model/view-mode';
 
-const PREFIX = 'demo-open-layers';
+const PREFIX = 'state-stats';
 
 const KEYS = {
   selectedStateCodes: `${PREFIX}.selectedStateCodes`,
