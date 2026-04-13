@@ -11,6 +11,8 @@ service:
 extraEnv:
   - name: "TZ"
     value: "UTC"
+  - name: "API_URL"
+    value: "https://statestats.juanfranciscoperez.es"
 extraEnvFrom: []
 resources:
   requests:
