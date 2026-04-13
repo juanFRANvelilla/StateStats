@@ -228,3 +228,16 @@ body.app-dark-theme .app-error-dialog-backdrop {
 .theme-toggle-wrap .switch:has(.circle:checked) > .moon {
   opacity: 0;
 }
+
+@media (max-width: 800px) {
+  .table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: transparent;
+    color: var(--bs-table-color);
+  }
+  .btn:hover, button:hover, a:hover {
+    background-color: inherit !important;
+    color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+  }
+}

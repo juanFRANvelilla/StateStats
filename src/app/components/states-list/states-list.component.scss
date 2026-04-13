@@ -32,8 +32,10 @@
   cursor: pointer;
 }
 
-.state-list button:hover {
-  background-color: #be0000;
+@media (min-width: 800px) {
+  .state-list button:hover {
+    background-color: #be0000;
+  }
 }
 
 .modal-overlay {

@@ -1,6 +1,6 @@
 <div *ngIf="viewMode == ViewMode.LIST_STATES" class="principal-container">
     <div class="scroll-container">
-        <table class="table table-hover table-bordered state-list header-table w-100 mb-0">
+        <table class="table table-bordered state-list header-table w-100 mb-0">
             <thead>
                 <tr>
                     <th scope="col" class="text-center state-select-col">{{ literals?.states_list?.table?.select }}</th>
@@ -11,7 +11,7 @@
         </table>
 
         <div class="table-body-scroll elegant-scroll">
-            <table class="table table-hover table-bordered state-list w-100">
+            <table class="table table-bordered state-list w-100">
                 <tbody>
                     <tr *ngFor="let state of stateList" [class.table-active]="state.selected"
                         class="state-table-row" (click)="onStateRowClick($event, state)">
@@ -65,7 +65,7 @@
 
 <div *ngIf="viewMode == ViewMode.LAYERS">
     <div class="scroll-container layers-scroll elegant-scroll">
-        <table class="table table-hover table-responsive state-list w-100">
+        <table class="table table-responsive state-list w-100">
             <thead>
                 <tr>
                     <th scope="col">{{ literals?.states_list?.table?.select }}</th>
