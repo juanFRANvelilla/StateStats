@@ -11,7 +11,7 @@
         </table>
 
         <div class="table-body-scroll elegant-scroll">
-            <table class="table table-bordered state-list w-100">
+            <table class="table table-bordered state-list w-100" [class.interactive-hover]="!mobileLayout">
                 <tbody>
                     <tr *ngFor="let state of stateList" [class.table-active]="state.selected"
                         class="state-table-row" (click)="onStateRowClick($event, state)">

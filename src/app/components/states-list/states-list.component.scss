@@ -400,3 +400,25 @@
     color: #12141a !important;
   }
 }
+
+/* Interactive Hover Effect for State List Rows */
+.table.interactive-hover {
+  tbody tr.state-table-row td {
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out, transform 0.2s;
+  }
+
+  tbody tr.state-table-row:not(.table-active):hover td {
+    background-color: #f0f4f8 !important;
+    color: #0b101e !important;
+    cursor: pointer;
+  }
+}
+
+:host-context(body.app-dark-theme) {
+  .table.interactive-hover {
+    tbody tr.state-table-row:not(.table-active):hover td {
+      background-color: #9ca3af !important; /* Softer, less aggressive silver/gray background */
+      color: #12141a !important; /* Very dark text to be readable */
+    }
+  }
+}
