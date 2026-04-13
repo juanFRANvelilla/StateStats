@@ -39,5 +39,5 @@ ingress:
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
     cert-manager.io/cluster-issuer: letsencrypt-ovh
   class: "nginx-local"
-  host: "state-stats.pre.danielbeltejar.es"
+  host: "StateStats.pre.danielbeltejar.es"
   tls: true
