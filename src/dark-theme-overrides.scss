@@ -76,8 +76,11 @@ body.app-dark-theme app-usa-map .filtered-list-container {
   color: #e8e8ec;
 }
 
-body.app-dark-theme app-usa-map .filtered-list-container p:hover {
-  background-color: #2a3142;
+@media (min-width: 800px) {
+  body.app-dark-theme app-usa-map .filtered-list-container p:hover {
+    background-color: #a0a6b5;
+    color: #12141a;
+  }
 }
 
 body.app-dark-theme app-usa-map .lang-select {
@@ -175,10 +178,12 @@ body.app-dark-theme .app-states-list .table-body-scroll table tbody tr:nth-child
   background-color: #181b24 !important;
 }
 
-body.app-dark-theme .app-states-list .table-hover tbody tr:hover:not(.table-active) td {
-  --bs-table-hover-bg: #252a38;
-  background-color: #252a38 !important;
-  color: #e8e8ec !important;
+@media (min-width: 800px) {
+  body.app-dark-theme .app-states-list .table-hover tbody tr:hover:not(.table-active) td {
+    --bs-table-hover-bg: #a0a6b5;
+    background-color: #a0a6b5 !important;
+    color: #12141a !important;
+  }
 }
 
 /* Filas seleccionadas: un solo verde oscuro (sin alternar con el rayado) */

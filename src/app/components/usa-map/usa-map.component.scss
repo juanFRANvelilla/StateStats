@@ -79,8 +79,10 @@
   cursor: pointer;
 }
 
-.filtered-list-container p:hover {
-  background-color: #f1f1f1;
+@media (min-width: 800px) {
+  .filtered-list-container p:hover {
+    background-color: #f1f1f1;
+  }
 }
 
 .polygon-tools-stack {
