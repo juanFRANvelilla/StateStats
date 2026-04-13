@@ -39,5 +39,5 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-set-header: X-Real-IP $remote_addr
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
   class: "nginx-online"
-  host: "StateStats.juanfranciscoperez.es"
+  host: "statestats.juanfranciscoperez.es"
   tls: true
