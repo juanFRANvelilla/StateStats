@@ -293,15 +293,17 @@ body.app-dark-theme app-state-detail .btn-primary.btn-lg {
   color: #fff;
 }
 
-body.app-dark-theme .app-states-list .btn-primary.btn-lg:hover,
-body.app-dark-theme app-state-compared .btn-primary.btn-lg:hover,
-body.app-dark-theme app-state-detail .btn-primary.btn-lg:hover,
-body.app-dark-theme .app-states-list .btn-primary.btn-lg:focus,
-body.app-dark-theme app-state-compared .btn-primary.btn-lg:focus,
-body.app-dark-theme app-state-detail .btn-primary.btn-lg:focus {
-  background-color: #0b5ed7;
-  border-color: #0a58ca;
-  color: #fff;
+@media (min-width: 800px) {
+  body.app-dark-theme .app-states-list .btn-primary.btn-lg:hover,
+  body.app-dark-theme app-state-compared .btn-primary.btn-lg:hover,
+  body.app-dark-theme app-state-detail .btn-primary.btn-lg:hover,
+  body.app-dark-theme .app-states-list .btn-primary.btn-lg:focus,
+  body.app-dark-theme app-state-compared .btn-primary.btn-lg:focus,
+  body.app-dark-theme app-state-detail .btn-primary.btn-lg:focus {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    color: #fff;
+  }
 }
 
 body.app-dark-theme .app-states-list .btn-warning.btn-lg {

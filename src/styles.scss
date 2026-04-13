@@ -234,10 +234,4 @@ body.app-dark-theme .app-error-dialog-backdrop {
     --bs-table-accent-bg: transparent;
     color: var(--bs-table-color);
   }
-  .btn:hover, button:hover, a:hover {
-    background-color: inherit !important;
-    color: inherit !important;
-    border-color: inherit !important;
-    box-shadow: none !important;
-  }
 }
