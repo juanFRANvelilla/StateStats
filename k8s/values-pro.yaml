@@ -3,8 +3,6 @@ namespace: pro-jf-state-stats-front
 replicaCount: 2
 registry: harbor.server.local/danielbeltejar
 image:
-  repository: state-stats
-  tag: latest
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP

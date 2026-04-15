@@ -4,8 +4,6 @@ replicaCount: 1
 # Imagen: {{ registry }}/state-stats:{{ appVersion }} → alinear tag con Jenkins/Kaniko
 registry: harbor.server.local/danielbeltejar
 image:
-  repository: state-stats
-  tag: latest
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP

@@ -33,7 +33,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
         - name: '{{ include "app.fullname" . }}-container'
-          image: "{{ .Values.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.registry }}/{{ .Chart.Name }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- with .Values.extraEnv }}
