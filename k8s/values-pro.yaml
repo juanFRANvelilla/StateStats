@@ -1,7 +1,7 @@
 # Producción — ajusta host, issuer y registry
 namespace: pro-jf-state-stats-front
 replicaCount: 2
-registry: harbor.server.local/danielbeltejar
+registry: harbor.server.local/danielbeltejar/statestats
 image:
   pullPolicy: IfNotPresent
 service:
