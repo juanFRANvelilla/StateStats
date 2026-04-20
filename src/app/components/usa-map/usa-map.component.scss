@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   max-height: 100dvh;
+  touch-action: none;
 }
 
 :host .position-relative {
@@ -16,6 +17,7 @@
   height: 100%;
   flex: 1;
   min-height: 0;
+  touch-action: none;
 }
 
 :host(.usa-map--mobile) .polygon-tools-stack,
@@ -26,6 +28,7 @@
 /* Color bajo las teselas (OpenLayers); evita destellos blancos al zoom al cambiar OSM ↔ oscuro */
 .map ::ng-deep .ol-viewport {
   background-color: #aad3df;
+  touch-action: none;
 }
 
 :host-context(body.app-dark-theme) .map ::ng-deep .ol-viewport {
