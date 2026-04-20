@@ -114,10 +114,26 @@ export class AppComponent implements OnInit {
       return;
     }
     this.sheetDragging = false;
-    if (this.sheetHeightPercent < 30) {
-      this.sheetHeightPercent = 0;
-    } else if (this.sheetHeightPercent > 80) {
-      this.sheetHeightPercent = 100;
+    
+    // Si estaba en 100% (pantalla completa)
+    if (this.dragStartPercent === 100) {
+      if (this.sheetHeightPercent < 90) {
+        // Bajado más de 80% → ir a 50%
+        this.sheetHeightPercent = 50;
+      } else if (this.sheetHeightPercent < 50) {
+        // Bajado entre 50-80% → quedarse donde esté
+        // (no hacer nada, mantiene el valor actual)
+      } else {
+        // Volvió hacia arriba → 100%
+        this.sheetHeightPercent = 100;
+      }
+    } else {
+      // Lógica normal para otros casos
+      if (this.sheetHeightPercent < 20) {
+        this.sheetHeightPercent = 0;
+      } else if (this.sheetHeightPercent > 50) {
+        this.sheetHeightPercent = 100;
+      }
     }
     this.scheduleMapResize();
   }
