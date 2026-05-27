@@ -27,11 +27,21 @@ volumes:
   - name: tmpfs-run-nginx
     emptyDir:
       medium: Memory
+  - name: envjs
+    secret:
+      secretName: state-stats-front-envjs
+      items:
+        - key: env.js
+          path: env.js
 volumeMounts:
   - name: tmpfs-var-lib-nginx-tmp
     mountPath: /var/lib/nginx/tmp
   - name: tmpfs-run-nginx
     mountPath: /run/nginx
+  - name: envjs
+    mountPath: /usr/share/nginx/html/assets/env.js
+    subPath: env.js
+    readOnly: true
 ingress:
   enabled: true
   annotations:
