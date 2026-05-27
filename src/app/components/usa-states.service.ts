@@ -8,6 +8,10 @@ import VectorLayer from 'ol/layer/Vector';
 import { LayerSelected } from './model/layer-selected';
 import { AppPersistenceService } from '../services/app-persistence.service';
 
+type RuntimeEnv = {
+  CENSUS_API_KEY?: string;
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -115,7 +119,16 @@ export class UsaStatesService {
   }
 
   getCensusData(): Observable<any[]> {
-    const url = 'https://api.census.gov/data/2023/acs/acs5?get=NAME,B01003_001E,B19013_001E,B17001_002E,B23025_005E,B23025_004E,B25077_001E,B25064_001E,B15003_022E,B27001_001E&for=state:*';
+    const baseUrl =
+      'https://api.census.gov/data/2023/acs/acs5?get=NAME,B01003_001E,B19013_001E,B17001_002E,B23025_005E,B23025_004E,B25077_001E,B25064_001E,B15003_022E,B27001_001E&for=state:*';
+
+    // La API a veces redirige a `missing_key.html` si requiere API key.
+    // Esa redirección (302) suele fallar por CORS en el navegador, así que añadimos `key=` si existe.
+    const runtimeEnv = (globalThis as any).__ENV as RuntimeEnv | undefined;
+    const runtimeKey = runtimeEnv?.CENSUS_API_KEY?.trim();
+    const apiKey = runtimeKey || this.persistence.getCensusApiKey();
+    const url = apiKey ? `${baseUrl}&key=${encodeURIComponent(apiKey)}` : baseUrl;
+
     return this.http.get<any[]>(url);
   }
 

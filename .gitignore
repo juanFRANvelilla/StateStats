@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment (NO commitear secretos)
+/src/environments/environment.local.ts
+
+# Runtime env inyectado por servidor
+/src/assets/env.js

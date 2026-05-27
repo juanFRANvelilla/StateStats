@@ -57,6 +57,7 @@ import { LayerSelected } from '../model/layer-selected';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ThemeService } from '../../services/theme.service';
 import { AppPersistenceService } from '../../services/app-persistence.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-usa-map',
@@ -206,38 +207,50 @@ export class UsaMapComponent implements OnChanges {
           this.vectorSource.changed();
         });
 
-      this.usaStatesService.getCensusData().subscribe((censusData: any[]) => {
-        const dataRows = censusData.slice(1);
-
-        geojsonData.features.forEach((feature: any) => {
-          const stateCode = feature.properties.ste_stusps_code;
-          const stateFips = feature.properties.ste_code[0];
-          const stateName = feature.properties.ste_name[0];
-
-          const stateRow = dataRows.find(row => row[10] === stateFips || row[0] === stateName);
-
-          if (stateRow) {
-            const mappedState: StateInterface = {
-              name: stateName,
-              code: stateFips,
-              stateCode: stateCode,
-              selected: false,
-              totalPopulation: Number(stateRow[1] || 0),
-              medianIncome: Number(stateRow[2] || 0),
-              peopleInPoverty: Number(stateRow[3] || 0),
-              unemployed: Number(stateRow[4] || 0),
-              employed: Number(stateRow[5] || 0),
-              medianHomeValue: Number(stateRow[6] || 0),
-              medianRent: Number(stateRow[7] || 0),
-              universityDegree: Number(stateRow[8] || 0),
-              noHealthInsurance: Number(stateRow[9] || 0),
-            };
-            this.stateList.push(mappedState);
+      this.usaStatesService
+        .getCensusData()
+        .pipe(
+          catchError(() => {
+            // Si la API redirige a `missing_key.html` o falla por CORS, mostramos diálogo genérico.
+            this.dialog.open(ErrorDialogComponent, { width: '250px' });
+            return of([]);
+          })
+        )
+        .subscribe((censusData: any[]) => {
+          if (!Array.isArray(censusData) || censusData.length === 0) {
+            return;
           }
+          const dataRows = censusData.slice(1);
+
+          geojsonData.features.forEach((feature: any) => {
+            const stateCode = feature.properties.ste_stusps_code;
+            const stateFips = feature.properties.ste_code[0];
+            const stateName = feature.properties.ste_name[0];
+
+            const stateRow = dataRows.find(row => row[10] === stateFips || row[0] === stateName);
+
+            if (stateRow) {
+              const mappedState: StateInterface = {
+                name: stateName,
+                code: stateFips,
+                stateCode: stateCode,
+                selected: false,
+                totalPopulation: Number(stateRow[1] || 0),
+                medianIncome: Number(stateRow[2] || 0),
+                peopleInPoverty: Number(stateRow[3] || 0),
+                unemployed: Number(stateRow[4] || 0),
+                employed: Number(stateRow[5] || 0),
+                medianHomeValue: Number(stateRow[6] || 0),
+                medianRent: Number(stateRow[7] || 0),
+                universityDegree: Number(stateRow[8] || 0),
+                noHealthInsurance: Number(stateRow[9] || 0),
+              };
+              this.stateList.push(mappedState);
+            }
+          });
+          this.usaStatesService.setStateList(this.stateList);
+          this.usaStatesService.applyPersistedSelection();
         });
-        this.usaStatesService.setStateList(this.stateList);
-        this.usaStatesService.applyPersistedSelection();
-      });
     });
 
     this.usaStatesService.getMapLayers().subscribe((mapLayers: LayerSelected[]) => {

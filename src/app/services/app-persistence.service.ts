@@ -8,6 +8,7 @@ const KEYS = {
   polygonsGeoJSON: `${PREFIX}.polygonsGeoJSON`,
   viewMode: `${PREFIX}.viewMode`,
   mapView: `${PREFIX}.mapView`,
+  censusApiKey: `${PREFIX}.censusApiKey`,
 } as const;
 
 /** Vista del mapa: centro y extent en EPSG:3857 + zoom. */
@@ -21,6 +22,29 @@ export interface PersistedMapView {
   providedIn: 'root',
 })
 export class AppPersistenceService {
+  getCensusApiKey(): string | null {
+    try {
+      const raw = localStorage.getItem(KEYS.censusApiKey);
+      const trimmed = raw?.trim();
+      return trimmed ? trimmed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  setCensusApiKey(key: string): void {
+    try {
+      const trimmed = key.trim();
+      if (!trimmed) {
+        localStorage.removeItem(KEYS.censusApiKey);
+        return;
+      }
+      localStorage.setItem(KEYS.censusApiKey, trimmed);
+    } catch {
+      /* ignore */
+    }
+  }
+
   getSelectedStateCodes(): string[] {
     try {
       const raw = localStorage.getItem(KEYS.selectedStateCodes);
