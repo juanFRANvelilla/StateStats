@@ -1,0 +1,30 @@
+apiVersion: platform.delicias/v1alpha2
+kind: Application
+metadata:
+  name: statestats
+spec:
+  owner: user:danielbeltejar
+  repository: https://github.com/juanFRANvelilla/StateStats
+  defaultBranch: main
+  components:
+    - name: front
+      build:
+        context: .
+        dockerfile: Dockerfile
+      deploy:
+        kind: service
+        containerPort: 8080
+        servicePort: 80
+        healthPath: /healthz
+  environments:
+    pre:
+      automatic: true
+    pro:
+      automatic: false
+  promotion:
+    strategy: pull-request
+    from: pre
+    to: pro
+  artifacts:
+    registry: harbor.server.local/danielbeltejar/statestats
+    imageReference: digest
